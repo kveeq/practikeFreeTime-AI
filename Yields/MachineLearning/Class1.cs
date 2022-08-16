@@ -29,7 +29,7 @@ namespace Yields.MachineLearning
                 {
                     isAnaliz = true;
                 }
-                if(item.Trim().ToLower() == "доктору" || item.Trim().ToLower() == "доктор")
+                if(item.Trim().ToLower() == "доктору" || item.Trim().ToLower() == "доктор" || item.Trim().ToLower() == "врачу" || item.Contains("врач"))
                 {
                     isDoctor = true;
                 }
@@ -42,36 +42,49 @@ namespace Yields.MachineLearning
 
         public object Handling()
         {
-            bool isTerapevt = false;
-            if(isSdat)
+            if (isSdat)
             {
                 if (isAnaliz)
                 {
                     Analiz analiz = new Analiz(Text);
+                    analiz.HandleText();
                     // заглушка
                     // Console.WriteLine("Записали вас на сдачу анализов...");
-                }    
+                }
             }
-            if(isKonsult)
+            if (isDoctor)
             {
-                Console.WriteLine("какая у вас проблема?...");
-                string? problemStr = Console.ReadLine();
-                string[]? problemStrArr = problemStr?.Split(' ');
-                foreach (var item in problemStrArr)
+                if (!isKonsult)
                 {
-                    if(item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
-                    {
-                        isTerapevt = true;
-                    }
+                    IsKonsultDoctorhandle();
                 }
-
-                if(isTerapevt)
-                {
-                    Console.WriteLine("Записали вас к терапевту... кабинет...");
-                }
+            }
+            if (isKonsult)
+            {
+                IsKonsultDoctorhandle();
             }
 
             return true;
+        }
+
+        private void IsKonsultDoctorhandle()
+        {
+            bool isTerapevt = false;
+            Console.WriteLine("какая у вас проблема?...");
+            string? problemStr = Console.ReadLine();
+            string[]? problemStrArr = problemStr?.Split(' ');
+            foreach (var item in problemStrArr)
+            {
+                if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
+                {
+                    isTerapevt = true;
+                }
+            }
+
+            if (isTerapevt)
+            {
+                Console.WriteLine(isKonsult ? "Записали вас на консультацию к терапевту... кабинет..." : "Записали вас к терапевту на прием... кабинет...");
+            }
         }
     }
 }

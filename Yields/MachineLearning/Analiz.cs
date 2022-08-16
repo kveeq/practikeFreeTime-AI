@@ -16,6 +16,37 @@ namespace Yields.MachineLearning
 
         public Analiz(string textForHandle)
         {
+            handle(textForHandle);
+        }
+
+        public object HandleText()
+        {
+            while (true)
+            {
+                if (AnalizType == AnalizTypes.Null)
+                {
+                    /*
+                        ***
+                        * спрашивать какой именно тип анализа крови они хотят делать
+                        ***
+                    */
+                    Console.WriteLine("Скажите какой анализ хотите сдать: крови, UR");
+                    string handlingStrBloodType = Console.ReadLine();
+                    handle(handlingStrBloodType);
+                }
+                else
+                {
+                    // Console.WriteLine("Пройдите в кабинет... ");
+                    break;
+                }
+            }
+
+            return true;
+        }
+
+        // сделать так же как в классе анализа крови
+        private void handle(string textForHandle)
+        {
             handlingText = textForHandle.DelProbels();
             string[] handlingTextArr = handlingText.Split(' ');
             foreach (var item in handlingTextArr)
@@ -33,14 +64,13 @@ namespace Yields.MachineLearning
                 */
             }
         }
-
-        // сделать так же как в классе анализа крови
     }
 
     public enum AnalizTypes
     {
-        Blood = 0,
-        Ur = 1,
+        Null = 0,
+        Blood = 1,
+        Ur = 2,
         /*
             *** другие обобщенные типы анализов - например анализ крови и т.д.  ***
             * без уточнение *
