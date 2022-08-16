@@ -47,7 +47,9 @@ namespace Yields.MachineLearning
             {
                 if (isAnaliz)
                 {
-                    Console.WriteLine("Записали вас на сдачу анализов...");
+                    Analiz analiz = new Analiz(Text);
+                    // заглушка
+                    // Console.WriteLine("Записали вас на сдачу анализов...");
                 }    
             }
             if(isKonsult)
