@@ -13,6 +13,7 @@ namespace Yields.MachineLearning
         private bool isAnaliz = false;
         private bool isDoctor = false;
         private bool isKonsult = false;
+        private bool isUndefined = false;
 
         public Class1(string text)
         {
@@ -25,23 +26,32 @@ namespace Yields.MachineLearning
                 {
                     isSdat = true;
                 }
-                if(item.Trim().ToLower() == "анализ" || item.Trim().ToLower() == "анализы")
+                else if(item.Trim().ToLower() == "анализ" || item.Trim().ToLower() == "анализы")
                 {
                     isAnaliz = true;
                 }
-                if(item.Trim().ToLower() == "доктору" || item.Trim().ToLower() == "доктор" || item.Trim().ToLower() == "врачу" || item.Contains("врач"))
+                else if(item.Trim().ToLower() == "доктору" || item.Trim().ToLower() == "доктор" || item.Trim().ToLower() == "врачу" || item.Contains("врач"))
                 {
                     isDoctor = true;
                 }
-                if(item.Trim().ToLower() == "консультация" || item.Trim().ToLower().Contains("консульт"))
+                else if(item.Trim().ToLower() == "консультация" || item.Trim().ToLower().Contains("консульт"))
                 {
                     isKonsult = true;
+                }
+                else
+                {
+                    isUndefined = true;
                 }
             }
         }
 
         public object Handling()
         {
+            if(isUndefined)
+            {
+                Console.WriteLine("мы вас не поняли!");
+                return false;
+            }
             if (isSdat)
             {
                 if (isAnaliz)
@@ -71,20 +81,21 @@ namespace Yields.MachineLearning
         {
             bool isTerapevt = false;
             Console.WriteLine("какая у вас проблема?...");
-            string? problemStr = Console.ReadLine();
-            string[]? problemStrArr = problemStr?.Split(' ');
+            string problemStr = Console.ReadLine();
+            Doctor doctor = new();
+            string[] problemStrArr = problemStr?.Split(' ');
             foreach (var item in problemStrArr)
             {
                 if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
                 {
-                    isTerapevt = true;
+                    doctor = new(DoctorSpec.Terapevt);
                 }
             }
 
-            if (isTerapevt)
-            {
-                Console.WriteLine(isKonsult ? "Записали вас на консультацию к терапевту... кабинет..." : "Записали вас к терапевту на прием... кабинет...");
-            }
+            //if (doctor?.spec == Doctor)
+            //{
+            //    Console.WriteLine(isKonsult ? "Записали вас на консультацию к терапевту... кабинет..." : "Записали вас к терапевту на прием... кабинет...");
+            //}
         }
     }
 }
