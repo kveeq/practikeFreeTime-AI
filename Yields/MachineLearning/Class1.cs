@@ -8,6 +8,8 @@ namespace Yields.MachineLearning
 {
     public class Class1
     {
+        public static Action<string> AnswerEvent;
+        public static Func<string> QuestionEvent;
         public string? Text { get; set; }
         private bool isSdat = false;
         private bool isAnaliz = false;
@@ -22,27 +24,27 @@ namespace Yields.MachineLearning
             string[]? str = Text?.Split(' ');
             foreach (string? item in str)
             {
-                if(item.Trim().ToLower() == "сдать")
+                if (item.Trim().ToLower() == "сдать")
                 {
                     isSdat = true;
                 }
-                else if(item.Trim().ToLower() == "анализ" || item.Trim().ToLower() == "анализы")
+                else if (item.Trim().ToLower() == "анализ" || item.Trim().ToLower() == "анализы")
                 {
                     isAnaliz = true;
                 }
-                else if(item.Trim().ToLower() == "доктору" || item.Trim().ToLower() == "доктор" || item.Trim().ToLower() == "врачу" || item.Contains("врач"))
+                else if (item.Trim().ToLower() == "доктору" || item.Trim().ToLower() == "доктор" || item.Trim().ToLower() == "врачу" || item.Contains("врач"))
                 {
                     isDoctor = true;
                 }
-                else if(item.Trim().ToLower() == "консультация" || item.Trim().ToLower().Contains("консульт"))
+                else if (item.Trim().ToLower() == "консультация" || item.Trim().ToLower().Contains("консульт"))
                 {
                     isKonsult = true;
                 }
-                else
-                {
-                    isUndefined = true;
-                }
             }
+
+            if (!isSdat && !isAnaliz && !isDoctor && !isKonsult)
+                isUndefined = true;
+
         }
 
         public object Handling()
@@ -79,16 +81,15 @@ namespace Yields.MachineLearning
 
         private void IsKonsultDoctorhandle()
         {
-            bool isTerapevt = false;
-            Console.WriteLine("какая у вас проблема?...");
+            AnswerEvent?.Invoke("какая у вас проблема?...");
             string problemStr = Console.ReadLine();
-            Doctor doctor = new();
+            Doctor doctor;
             string[] problemStrArr = problemStr?.Split(' ');
             foreach (var item in problemStrArr)
             {
                 if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
                 {
-                    doctor = new(DoctorSpec.Terapevt);
+                    doctor = new(isKonsult, DoctorSpec.Terapevt);
                 }
             }
 

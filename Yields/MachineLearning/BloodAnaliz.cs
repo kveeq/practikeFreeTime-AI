@@ -29,13 +29,13 @@ namespace Yields.MachineLearning
                         * спрашивать какой именно тип анализа крови они хотят делать
                         ***
                     */
-                    Console.WriteLine("Скажите тип анализа крови: биохимия, клинический, общий");
-                    string handlingStrBloodType = Console.ReadLine();
+                    Class1.AnswerEvent?.Invoke("Скажите тип анализа крови: биохимия, клинический, общий");
+                    string handlingStrBloodType = Class1.QuestionEvent?.Invoke();
                     handle(handlingStrBloodType);
                 }
                 else
                 {
-                    Console.WriteLine("Пройдите в кабинет... ");
+                    Class1.AnswerEvent?.Invoke("Пройдите в кабинет... ");
                     break;
                 }
             }

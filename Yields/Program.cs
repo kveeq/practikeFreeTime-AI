@@ -15,6 +15,8 @@ namespace Yields
         {
             // Task.Run(() => Stepik2());
             // Stepik1();
+            Class1.QuestionEvent = () => Console.ReadLine();
+            Class1.AnswerEvent = (mess) => Console.WriteLine(mess);
             Class1 handle = new Class1(Console.ReadLine());
             handle.Handling();
             //Stepik7();

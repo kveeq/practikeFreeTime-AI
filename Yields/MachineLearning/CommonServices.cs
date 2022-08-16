@@ -11,7 +11,7 @@ namespace Yields.MachineLearning
         public static string DelProbels(this string inText)
         {
             inText = inText.Trim().ToLower();
-            string outText = "";
+            string outText = "" + inText[0];
             for (int i = 1; i < inText.Length; i++)
             {
                 if (inText[i] == ' ' && inText[i-1] == ' ')
