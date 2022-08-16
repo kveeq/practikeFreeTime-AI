@@ -15,26 +15,12 @@ namespace Yields
         {
             // Task.Run(() => Stepik2());
             // Stepik1();
-            Class1.QuestionEvent = () => Console.ReadLine();
-            Class1.AnswerEvent = (mess) => Console.WriteLine(mess);
+            Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ )
             Class1 handle = new Class1(Console.ReadLine());
             handle.Handling();
             //Stepik7();
-            //for (int? i = 0; i < 5; i++)
-            //{
-            //    for (int? j = 0; j < 20; j++)
-            //    {
-            //        if(i == 0 || i == 4)
-            //            Console.Write("_");
-            //        else if(j == 0 || j == 19)
-            //            Console.Write("|");
-            //        else if(j==1 && i == 3)
-            //            Console.Write("a");
-            //        else
-            //            Console.Write(" ");
-            //    }
-            //    Console.Write("\n");
-            //}
+
             // Prog1();
             //PersonalDela personalDela1 = new PersonalDela("Sidorov", "Sidor", "9A", "");
             //PersonalDela personalDela2 = new PersonalDela("Petrov", "Petr", "9A", "");
@@ -397,7 +383,7 @@ namespace Yields
 
     public class CatService
     {
-        public static readonly string? connectionString = "database=dms:D:\\dms\\MEDICINA19042022.GDB;user=sysdba;password=masterkey";
+        public static readonly string? connectionString = "database=dms:D:\\dms\\MEDICINA19042022.GDB;user=***;password=***";
 
         public IEnumerator<CatModel> GetEnumerator()
         {
