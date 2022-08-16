@@ -16,16 +16,20 @@ namespace Yields.MachineLearning
 
     public class Doctor
     {
-        public Doctor(DoctorSpec spec = DoctorSpec.Null)
+        public Doctor(bool onKonsult, DoctorSpec spec = DoctorSpec.Null)
         {
             this.spec = spec;
             GetFreeDoctor();
+            OnKonsult = onKonsult;
         }
 
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Fathername { get; set; }
-        public bool isKusulting { get; set; } = false;
+        // консультирует ли врач
+        public bool isKonsulting { get; set; } = false; 
+        // пациент на консультацию? если врач не консультирует то и пациент не может к нему не консультацию
+        public bool OnKonsult { get => OnKonsult; set => OnKonsult = isKonsulting ? value : false; } 
         public DoctorSpec spec { get; set; }
         public int DoctorId { get; set; } // к какому доктору 
 

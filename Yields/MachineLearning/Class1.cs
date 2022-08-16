@@ -79,7 +79,6 @@ namespace Yields.MachineLearning
 
         private void IsKonsultDoctorhandle()
         {
-            bool isTerapevt = false;
             Console.WriteLine("какая у вас проблема?...");
             string problemStr = Console.ReadLine();
             Doctor doctor = new();
@@ -88,7 +87,7 @@ namespace Yields.MachineLearning
             {
                 if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
                 {
-                    doctor = new(DoctorSpec.Terapevt);
+                    doctor = new(DoctorSpec.Terapevt, isKonsult);
                 }
             }
 
