@@ -11,80 +11,81 @@ namespace Yields
     {
         public static void Main()
         {
-            FootballTeam footballTeam = new FootballTeam("Star", new Footballist[11]);
+            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            var handle = new MachineLearning.Class1(Console.ReadLine());
+            handle.Handling();
 
-            try
-            {
-                for (int i = 0; i < 11; i++)
-                {
-                    footballTeam[i] = new Footballist($"Player{i + 1}", new Random().Next(i, 20));
-                }
+            //FootballTeam footballTeam = new FootballTeam("Star", new Footballist[11]);
 
-                for (int i = 0; i < 15; i++)
-                {
-                    Console.WriteLine(footballTeam[i]);
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            Dictionary dictionary = new Dictionary();
-            Console.WriteLine(dictionary["red"]);
-            dictionary["red"] = "Темно-красный";
-            Console.WriteLine(dictionary["red"]);
-
-            GenericArray<Dictionary> genericArray = new GenericArray<Dictionary>(new List<Dictionary>() {dictionary});
-            for (int i = 0; i < genericArray.GetLength(); i++)
-            {
-                var ite = genericArray[i];
-                Console.WriteLine(ite);
-                int a = ite.GetLength();
-                for (int j = 0; j < a; j++)
-                {
-                    Console.WriteLine("\t" + ite[j]);
-                }
-            }
-            Console.WriteLine(2);
-            genericArray.AddToArr(new Dictionary());
-            for (int i = 0; i < genericArray.GetLength(); i++)
-            {
-                var item = genericArray[i];
-                Console.WriteLine(item);
-                for (int j = 0; j < item.GetLength(); j++)
-                {
-                    Console.WriteLine("\t" + item[j]);
-                }
-            }
-
-            
-            
-            //genericArray.DeleteArr(3);
-            //for (int i = 0; i < 6; i++)
+            //try
             //{
-            //    Console.WriteLine(genericArray[i]);
+            //    for (int i = 0; i < 11; i++)
+            //    {
+            //        footballTeam[i] = new Footballist($"Player{i + 1}", new Random().Next(i, 20));
+            //    }
+
+            //    for (int i = 0; i < 15; i++)
+            //    {
+            //        Console.WriteLine(footballTeam[i]);
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
             //}
 
-            ITransport transport = new Transport();
-            transport = new Flyer();
-            Console.WriteLine(transport.GetTime(500, 50) + "minutes");
-            IGo tr = new Car();
-            tr.Start();
-            tr.Remen();
-            tr.Go();
-            tr.Stop();
-            IFly sam = new Flyer();
-            sam.Start();
-            sam.Fly();
-            sam.Katapult();
-            sam.Stop();
+            //Dictionary dictionary = new Dictionary();
+            //Console.WriteLine(dictionary["red"]);
+            //dictionary["red"] = "Темно-красный";
+            //Console.WriteLine(dictionary["red"]);
+
+            //GenericArray<Dictionary> genericArray = new GenericArray<Dictionary>(new List<Dictionary>() {dictionary});
+            //for (int i = 0; i < genericArray.GetLength(); i++)
+            //{
+            //    var ite = genericArray[i];
+            //    Console.WriteLine(ite);
+            //    int a = ite.GetLength();
+            //    for (int j = 0; j < a; j++)
+            //    {
+            //        Console.WriteLine("\t" + ite[j]);
+            //    }
+            //}
+            //Console.WriteLine(2);
+            //genericArray.AddToArr(new Dictionary());
+            //for (int i = 0; i < genericArray.GetLength(); i++)
+            //{
+            //    var item = genericArray[i];
+            //    Console.WriteLine(item);
+            //    for (int j = 0; j < item.GetLength(); j++)
+            //    {
+            //        Console.WriteLine("\t" + item[j]);
+            //    }
+            //}
+
+
+
+            ////genericArray.DeleteArr(3);
+            ////for (int i = 0; i < 6; i++)
+            ////{
+            ////    Console.WriteLine(genericArray[i]);
+            ////}
+
+            //ITransport transport = new Transport();
+            //transport = new Flyer();
+            //Console.WriteLine(transport.GetTime(500, 50) + "minutes");
+            //IGo tr = new Car();
+            //tr.Start();
+            //tr.Remen();
+            //tr.Go();
+            //tr.Stop();
+            //IFly sam = new Flyer();
+            //sam.Start();
+            //sam.Fly();
+            //sam.Katapult();
+            //sam.Stop();
             // Task.Run(() => Stepik2());
             // Stepik1();
-            Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            Class1 handle = new Class1(Console.ReadLine());
-            handle.Handling();
             //Stepik7();
 
             // Prog1();
