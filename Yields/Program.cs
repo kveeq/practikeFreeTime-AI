@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Collections;
 using Yields.MachineLearning;
+using Yields.Werner;
 
 namespace Yields
 {
@@ -13,10 +14,12 @@ namespace Yields
     {
         public static void Main()
         {
+            IMoveable transport = new Transport();
+            Console.WriteLine(transport.GetTime(500, 50));
             // Task.Run(() => Stepik2());
             // Stepik1();
             Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ )
+            Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
             Class1 handle = new Class1(Console.ReadLine());
             handle.Handling();
             //Stepik7();

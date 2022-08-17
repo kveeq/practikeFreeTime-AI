@@ -44,7 +44,7 @@ namespace Yields.MachineLearning
 
             if (!isSdat && !isAnaliz && !isDoctor && !isKonsult)
                 isUndefined = true;
-
+        
         }
 
         public object Handling()
@@ -54,6 +54,7 @@ namespace Yields.MachineLearning
                 Console.WriteLine("мы вас не поняли!");
                 return false;
             }
+
             if (isSdat)
             {
                 if (isAnaliz)
@@ -64,6 +65,7 @@ namespace Yields.MachineLearning
                     // Console.WriteLine("Записали вас на сдачу анализов...");
                 }
             }
+
             if (isDoctor)
             {
                 if (!isKonsult)
@@ -71,6 +73,7 @@ namespace Yields.MachineLearning
                     IsKonsultDoctorhandle();
                 }
             }
+
             if (isKonsult)
             {
                 IsKonsultDoctorhandle();
@@ -81,16 +84,22 @@ namespace Yields.MachineLearning
 
         private void IsKonsultDoctorhandle()
         {
-            AnswerEvent?.Invoke("какая у вас проблема?...");
-            string problemStr = Console.ReadLine();
-            Doctor doctor;
-            string[] problemStrArr = problemStr?.Split(' ');
-            foreach (var item in problemStrArr)
+            Doctor doctor = null;
+            string povt = "";
+            while (doctor == null)
             {
-                if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
+                AnswerEvent?.Invoke("какая у вас проблема?... " + povt);
+                string problemStr = Console.ReadLine();
+                string[] problemStrArr = problemStr?.Split(' ');
+                foreach (var item in problemStrArr)
                 {
-                    doctor = new(isKonsult, DoctorSpec.Terapevt);
+                    if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
+                    {
+                        doctor = new(isKonsult, DoctorSpec.Terapevt);
+                    }
                 }
+                if (doctor == null)
+                    povt = "I not understand you...";
             }
 
             //if (doctor?.spec == Doctor)
