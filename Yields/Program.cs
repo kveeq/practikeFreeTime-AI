@@ -3,7 +3,10 @@ using System.Management;
 using Yields.indexators;
 using Yields.MachineLearning;
 using FirebirdSql.Data.FirebirdClient;
-using System.Reflection;
+using IronPython.Hosting;
+using IronRuby.Hosting;
+using Microsoft.Scripting.Hosting;
+using IronRuby;
 
 namespace Yields
 {
@@ -11,15 +14,12 @@ namespace Yields
     {
         public static void Main()
         {
-            //    ScriptEngine engine = Python.CreateEngine();
-            //    engine.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\test.py");
+            //ScriptEngine engine = Python.CreateEngine();
+            //engine.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\test.py");
 
 
-            //не смог разобраться как запустить ruby
-            //var ghbd = Ruby.CreateRubySetup();
-            ////ghbd.InterpretedMode = true;
+            // не смог разобраться как запустить ruby
             //var runtime = Ruby.CreateRuntime();
-            //Console.SetOut(runtime.IO.OutputWriter);
             //runtime.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\testRuby.rb");
 
 
@@ -29,19 +29,13 @@ namespace Yields
             handle.Handling();
 
             //var class1 = new Doctor(true);
-            //class1.Name = "Name";
-            //class1.Surname = "Surname";
-            //class1.Fathername = "Fathername";
             //var a = class1.GetType();
             //var props = a.GetProperties();
-            //var meths = a.GetMethods(BindingFlags.Instance |
-            //BindingFlags.Public |
-            //BindingFlags.NonPublic);
+            //var meths = a.GetMethods();
             //Console.WriteLine("Свойства: ");
             //foreach (var item in props)
             //{
             //    Console.WriteLine($"  {item.PropertyType.Name} {item.Name}");
-            //    Console.WriteLine($"  {item}");
             //}
             //Console.WriteLine("Методы: ");
             //foreach (var item in meths)
@@ -165,19 +159,6 @@ namespace Yields
         // та самая с учащимися
         private static void Stepik6()
         {
-            // 3
-            // ghb
-            // fei
-            // 9A
-            // 27.03.12
-            // gjie
-            // gke
-            // 10A
-            // 29,
-            // fkw
-            // fw
-            // 9B
-            // 2032
             int n = Convert.ToInt32(Console.ReadLine());
             PersonalDela[]? mark = new PersonalDela[n];
             for (int i = 0; i < n; i++)
@@ -191,18 +172,6 @@ namespace Yields
                 PersonalDela? marks = new(str1[0], str1[1], str1[2], str1[3]);
                 mark[i] = marks;
             }
-
-            for(int i = 0; i < n; i++)
-            {
-                for(int j = 0; j < n-1; j++)
-                {
-                    if (mark[j].CompareTo(mark[j+1]) > 0)
-                    {
-                        (mark[j], mark[j+1]) = (mark[j+1], mark[j]);
-                    }
-                }
-            }
-
             //Sort<PersonalDela[]>(mark);
 
             foreach (var item in mark)
