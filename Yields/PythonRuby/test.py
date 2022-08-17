@@ -1,1 +1,1 @@
-﻿print ("hello, metanit.com")
+﻿print (2+ 2)
