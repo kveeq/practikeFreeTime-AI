@@ -70,19 +70,19 @@ namespace Yields.MachineLearning
             {
                 if (!isKonsult)
                 {
-                    IsKonsultDoctorhandle();
+                    IsKonsultDoctorHandle();
                 }
             }
 
             if (isKonsult)
             {
-                IsKonsultDoctorhandle();
+                IsKonsultDoctorHandle();
             }
 
             return true;
         }
 
-        private void IsKonsultDoctorhandle()
+        private void IsKonsultDoctorHandle()
         {
             Doctor doctor = null;
             string povt = "";

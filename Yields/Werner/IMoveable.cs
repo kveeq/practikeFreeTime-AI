@@ -14,4 +14,36 @@ namespace Yields.Werner
 
         public int MaxSpeed { get => maxSpeed; set { if (value > 0) maxSpeed = value; } }
     }
+
+    interface ITransport : IMoveable
+    {
+        void Start();
+        void Stop();
+    }
+
+    interface IFly : IMoveable, ITransport
+    {
+        void Fly();
+        void Katapult();
+    }
+
+    interface IGo : IMoveable, ITransport
+    {
+        void Go();
+        void Remen();
+    }
+
+    interface ISwim : IMoveable, ITransport
+    {
+        void Swim();
+        void Shvartovat();
+    }
+
+    interface IHeartEntety : IMoveable
+    {
+        void GetUp();
+        void GetDown();
+        void Go();
+        void Eat();
+    }
 }
