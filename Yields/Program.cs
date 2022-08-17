@@ -1,17 +1,13 @@
-﻿using FirebirdSql.Data.FirebirdClient;
-using System;
-using System.Diagnostics;
+﻿using Yields.Werner;
 using System.Management;
-using System.Text;
-using System.Collections.Generic;
-using System.Collections;
-using Yields.MachineLearning;
-using Yields.Werner;
 using Yields.indexators;
+using Yields.MachineLearning;
+using FirebirdSql.Data.FirebirdClient;
+
 
 namespace Yields
 {
-    public class Program
+    public class Program : IComparable
     {
         public static void Main()
         {
@@ -54,14 +50,16 @@ namespace Yields
             genericArray.AddToArr(new Dictionary());
             for (int i = 0; i < genericArray.GetLength(); i++)
             {
-                var ite = genericArray[i];
-                Console.WriteLine(ite);
-                for (int j = 0; j < ite.GetLength(); j++)
+                var item = genericArray[i];
+                Console.WriteLine(item);
+                for (int j = 0; j < item.GetLength(); j++)
                 {
-                    Console.WriteLine("\t" + ite[j]);
+                    Console.WriteLine("\t" + item[j]);
                 }
             }
 
+            
+            
             //genericArray.DeleteArr(3);
             //for (int i = 0; i < 6; i++)
             //{
@@ -125,24 +123,15 @@ namespace Yields
                 PersonalDela? marks = new(str1[0], str1[1], str1[2], str1[3]);
                 mark[i] = marks;
             }
-
-            for (int? j = 0; j < n; j++)
-            {
-                for (int i = 0; i < n - 1; i++)
-                {
-                    if (mark[i].CompareTo(mark[i + 1]) > 0)
-                    {
-                        // для swap используется кортеж
-                        (mark[i + 1], mark[i]) = (mark[i], mark[i + 1]);
-                    }
-                }
-            }
+            Sort<PersonalDela[]>(mark);
 
             foreach (var item in mark)
             {
                 Console.WriteLine(item);
             }
         }
+
+       
 
         // сортировка по убыванию среднего балла
         private static void Stepik1()
@@ -425,6 +414,11 @@ namespace Yields
                     strCount++;
                 }
             }
+        }
+
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 

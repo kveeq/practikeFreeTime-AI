@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yields
 {
-    public class PersonalDela : IComparable<PersonalDela>
+    public class PersonalDela : IComparable
     {
         public PersonalDela(string surname, string name, string @class, string dateOfBirth)
         {
@@ -26,8 +26,14 @@ namespace Yields
             return $"{Clas} {Surname} {Name} {DateOfBirth}";
         }
 
-        public int CompareTo(PersonalDela? other)
+        //public int CompareTo(PersonalDela? other)
+        //{
+
+        //}
+
+        public int CompareTo(object obj)
         {
+            PersonalDela other = (PersonalDela)obj;
             int clas1 = Convert.ToInt32(Clas.Remove(Clas.Length - 1));
             int clas2 = Convert.ToInt32(other?.Clas.Remove(other.Clas.Length - 1));
             int res3 = clas1.CompareTo(clas2);
@@ -45,7 +51,7 @@ namespace Yields
                 return res;
             }
 
-            return res3;    
+            return res3;
         }
     }
 }
