@@ -62,6 +62,7 @@ namespace Yields
             //foreach (var item in tuple)
             //{
             //    Console.WriteLine($"  {item}");
+            //
             //}
             //Console.WriteLine(meths[0].Invoke(class1, parameters: null));
             //Console.WriteLine(meths[2].Invoke(class1, parameters: null));
