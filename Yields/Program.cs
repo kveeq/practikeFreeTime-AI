@@ -3,7 +3,10 @@ using System.Management;
 using Yields.indexators;
 using Yields.MachineLearning;
 using FirebirdSql.Data.FirebirdClient;
-
+using IronPython.Hosting;
+using IronRuby.Hosting;
+using Microsoft.Scripting.Hosting;
+using IronRuby;
 
 namespace Yields
 {
@@ -11,10 +14,45 @@ namespace Yields
     {
         public static void Main()
         {
+            //ScriptEngine engine = Python.CreateEngine();
+            //engine.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\test.py");
+
+
+            // не смог разобраться как запустить ruby
+            //var runtime = Ruby.CreateRuntime();
+            //runtime.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\testRuby.rb");
+
+
             MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
             MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
             var handle = new MachineLearning.Class1(Console.ReadLine());
             handle.Handling();
+
+            //var class1 = new Doctor(true);
+            //var a = class1.GetType();
+            //var props = a.GetProperties();
+            //var meths = a.GetMethods();
+            //Console.WriteLine("Свойства: ");
+            //foreach (var item in props)
+            //{
+            //    Console.WriteLine($"  {item.PropertyType.Name} {item.Name}");
+            //}
+            //Console.WriteLine("Методы: ");
+            //foreach (var item in meths)
+            //{
+            //    var d = item.ReflectedType.Assembly.GetFiles();
+            //    Console.Write($"  {d[0].Name} {item.Name} {item.ReturnType.Name} (");
+            //    var parms = item.GetParameters();
+            //    for (int i = 0; i < parms.Length; i++)
+            //    {
+            //        Console.Write(parms[i].Name);
+            //        if(i != parms.Length-1)
+            //            Console.Write(", ");
+            //    };
+            //    Console.Write(")\n");
+            //}
+
+
 
             //FootballTeam footballTeam = new FootballTeam("Star", new Footballist[11]);
 
@@ -124,7 +162,7 @@ namespace Yields
                 PersonalDela? marks = new(str1[0], str1[1], str1[2], str1[3]);
                 mark[i] = marks;
             }
-            Sort<PersonalDela[]>(mark);
+            //Sort<PersonalDela[]>(mark);
 
             foreach (var item in mark)
             {

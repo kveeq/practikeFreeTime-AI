@@ -8,11 +8,11 @@ namespace Yields
 {
     public class PersonalDela : IComparable
     {
-        public PersonalDela(string surname, string name, string @class, string dateOfBirth)
+        public PersonalDela(string surname, string name, string clas, string dateOfBirth)
         {
             Surname = surname;
             Name = name;
-            Clas = @class;
+            Clas = clas;
             DateOfBirth = dateOfBirth;
         }
 

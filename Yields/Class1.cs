@@ -15,11 +15,11 @@ namespace Yields
             {
                 for (int i = 0; i < mark.Length - 1; i++)
                 {
-                    if (mark.GetValue(i).CompareTo(mark.GetValue(i + 1)) > 0)
-                    {
-                        // для swap используется кортеж
-                        (mark[i + 1], mark[i]) = (mark[i], mark[i + 1]);
-                    }
+                    //if (mark.GetValue(i).CompareTo(mark.GetValue(i + 1)) > 0)
+                    //{
+                    //    // для swap используется кортеж
+                    //    (mark[i + 1], mark[i]) = (mark[i], mark[i + 1]);
+                    //}
                 }
             }
         }
