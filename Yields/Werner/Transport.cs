@@ -81,7 +81,7 @@ namespace Yields.Werner
             }
         }
 
-        public int damage = 150;
+        public int damage = 10;
 
         public event Action<string> HpChange;
         public event Action<string> HumanDead;
@@ -89,7 +89,10 @@ namespace Yields.Werner
         public void Eat(Food food)
         {
             if (isDead)
+            {
+                Console.WriteLine("human dead");
                 return;
+            }
             food.Eat(this);
             Console.WriteLine($"{this.GetType().Name} Eating");
         }
@@ -97,28 +100,40 @@ namespace Yields.Werner
         public void Jump()
         {
             if (isDead)
+            {
+                Console.WriteLine("human dead");
                 return;
+            }
             Console.WriteLine($"{this.GetType().Name} Jumping");
         }
 
         public void Living()
         {
             if (isDead)
+            {
+                Console.WriteLine("human dead");
                 return;
+            }
             Console.WriteLine($"{this.GetType().Name} Living");
         }
 
         public void Hit(IHumanable human2)
         {
             if (isDead)
+            {
+                Console.WriteLine("human dead");
                 return;
+            }
             human2.Hp -= damage;
         }     
         
         public void Hit(IHumanable human2, Weapon weapon)
         {
             if (isDead)
+            {
+                Console.WriteLine("human dead");
                 return;
+            }
             human2.Hp -= weapon.Damage;
         }
 

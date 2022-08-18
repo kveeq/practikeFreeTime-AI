@@ -10,61 +10,85 @@ using IronRuby;
 
 namespace Yields
 {
-    public class Program : IComparable
-    {
+    
 
+    public class Program
+    {
         public static void Main()
         {
-            ITransport transport = new Car();
-            transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
-            transport.Start();
-            transport.SetToplivo(new Benz92(-83));
-            transport.Move();
-            transport.Stop();
-            transport.Jump();
-            transport.SetToplivo(new Benz92(13));
-            transport = new Moto();
-            transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
-            transport.Start();
-            transport.Move();
-            transport.Jump();
-            transport.BeforeUp();
-            transport.Stop();
-            transport.SetToplivo(new Benz92(30));
-            IFlyable flyTransport = new Flyer();
-            flyTransport.Start();
-            flyTransport.Fly();
-            flyTransport.Katapult();
-            flyTransport.Stop();
-            ISwimable swimTransport = new Swimmer();
-            swimTransport.Start();
-            swimTransport.Swim();
-            swimTransport.Shvartovat();
-            swimTransport.Stop();
+            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            var handle = new MachineLearning.Class1(Console.ReadLine());
+            handle.Handling();
+
+            //ITransport transport = new Car();
+            //transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
+            //transport.Start();
+            //transport.SetToplivo(new Benz92(-83));
+            //transport.Move();
+            //transport.Stop();
+            //transport.Jump();
+            //transport.SetToplivo(new Benz92(13));
+            //transport = new Moto();
+            //transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
+            //transport.Start();
+            //transport.Move();
+            //transport.Jump();
+            //transport.BeforeUp();
+            //transport.Stop();
+            //transport.SetToplivo(new Benz92(30));
+            //IFlyable flyTransport = new Flyer();
+            //flyTransport.Start();
+            //flyTransport.Fly();
+            //flyTransport.Katapult();
+            //flyTransport.Stop();
+            //ISwimable swimTransport = new Swimmer();
+            //swimTransport.Start();
+            //swimTransport.Swim();
+            //swimTransport.Shvartovat();
+            //swimTransport.Stop();
 
 
-            Console.WriteLine("\n\n");
-            IHumanable human2 = new Human();
-            human2.HumanDead += (mess) => Console.WriteLine(mess);
-            human2.HpChange += (mess) => Console.WriteLine(mess); 
-            human2.Move();
-            human2.Jump();
-            human2.Eat(new Meat(20));
-            human2.Eat(new Orange(10));
-            human2.Living();
+            //Console.WriteLine("\n\n");
+            //IHumanable human2 = new Human();
+            //human2.HumanDead += (mess) => Console.WriteLine(mess);
+            //human2.HpChange += (mess) => Console.WriteLine(mess); 
+            //human2.Move();
+            //human2.Jump();
+            //human2.Eat(new Meat(20));
+            //human2.Eat(new Orange(10));
+            //human2.Living();
 
-            Console.WriteLine();
-            IHumanable human = new Human();
-            human.HumanDead += (mess) => Console.WriteLine(mess);
-            human.HpChange += (mess) => Console.WriteLine(mess); 
-            human.Move();
-            human.Hit(human2);
-            human.Jump();
-            human.Eat(new Meat(20));
-            human.Eat(new Orange(10));
-            human.Living();
+            //Console.WriteLine();
+            //IHumanable human = new Human();
+            //human.HumanDead += (mess) => Console.WriteLine(mess);
+            //human.HpChange += (mess) => Console.WriteLine(mess); 
+            //human.Move();
+            //human.Hit(human2);
+            //human.Jump();
+            //human.Eat(new Meat(20));
+            //human.Eat(new Orange(10));
+            //human.Living();
 
-            human2.Eat(new Meat(20));
+            //human2.Eat(new Meat(20));
+
+
+
+            //Matrix<int> matrix = new Matrix<int>(3,4);
+            //for (int i = 0; i < matrix.RowCount; i++)
+            //{
+            //    string a = Console.ReadLine();
+            //    string[] str = a.Split(' ');
+            //    for (int j = 0; j < matrix.ColumnCount; j++)
+            //    {
+            //        matrix[i, j] = int.Parse(str[j]);
+            //    }
+            //}
+            //Console.WriteLine();
+            //matrix.GetMatrix();
+            //Console.WriteLine();
+            //Console.WriteLine(matrix[1, 2]);
+
 
 
             //ScriptEngine engine = Python.CreateEngine();
@@ -75,11 +99,6 @@ namespace Yields
             //var runtime = Ruby.CreateRuntime();
             //runtime.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\testRuby.rb");
 
-
-            //MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            //MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            //var handle = new MachineLearning.Class1(Console.ReadLine());
-            //handle.Handling();
 
             //var class1 = new Doctor(true);
             //var a = class1.GetType();
@@ -624,6 +643,45 @@ namespace Yields
                         }
                     }
                 }
+            }
+        }
+    }
+
+    class Matrix<T>
+    {
+        public int RowCount = 0, ColumnCount = 0;
+        public T[,] matrix;
+
+        public Matrix(int a, int b)
+        {
+            RowCount = a;
+            ColumnCount = b;
+            matrix = new T[a, b];
+
+        }
+
+        public void GetMatrix()
+        {
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColumnCount; j++)
+                {
+                    Console.Write(matrix[i, j] + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        public T this[int index, int index2]
+        {
+            get
+            {
+                return matrix[index, index2];
+            }
+            set
+            {
+                matrix[index, index2] = value;
             }
         }
     }
