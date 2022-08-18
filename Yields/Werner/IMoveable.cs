@@ -6,44 +6,33 @@ using System.Threading.Tasks;
 
 namespace Yields.Werner
 {
-    interface IMoveable
-    {
-        const int minSpeed = 0;
-        private static int maxSpeed = 100;
-        int GetTime(int distance, int speed);
-
-        public int MaxSpeed { get => maxSpeed; set { if (value > 0) maxSpeed = value; } }
-    }
-
-    interface ITransport : IMoveable
+    interface ITransport
     {
         void Start();
         void Stop();
     }
+    interface IMoveable : ITransport
+    {
+        void Move();
+        void Run();
+        void Jump() { }
+        void BeforeUp() { }
+    }
 
-    interface IFly : IMoveable, ITransport
+    interface IFlyable : ITransport
     {
         void Fly();
         void Katapult();
     }
 
-    interface IGo : IMoveable, ITransport
-    {
-        void Go();
-        void Remen();
-    }
-
-    interface ISwim : IMoveable, ITransport
+    interface ISwimable : ITransport
     {
         void Swim();
         void Shvartovat();
     }
 
-    interface IHeartEntety : IMoveable
+    interface IHumanable : IMoveable
     {
-        void GetUp();
-        void GetDown();
-        void Go();
-        void Eat();
+
     }
 }

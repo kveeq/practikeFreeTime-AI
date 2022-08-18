@@ -12,8 +12,37 @@ namespace Yields
 {
     public class Program : IComparable
     {
+
         public static void Main()
         {
+            //IMoveable transport = new Car();
+            //transport.Start();
+            //transport.Move();
+            //transport.Stop();
+            //transport.Jump();
+            //transport = new Human();
+            //transport.Start();
+            //transport.Move();
+            //transport.Jump();
+            //transport.Stop();
+            //transport = new Moto();
+            //transport.Start();
+            //transport.Move();
+            //transport.Jump();
+            //transport.BeforeUp();
+            //transport.Stop();
+            //IFlyable flyTransport = new Flyer();
+            //flyTransport.Start();
+            //flyTransport.Fly();
+            //flyTransport.Katapult();
+            //flyTransport.Stop();
+            //ISwimable swimTransport = new Swimmer();
+            //swimTransport.Start();
+            //swimTransport.Swim();
+            //swimTransport.Shvartovat();
+            //swimTransport.Stop();
+
+
             //ScriptEngine engine = Python.CreateEngine();
             //engine.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\test.py");
 
@@ -84,40 +113,41 @@ namespace Yields
             //}
 
 
-            var words = new Word<string, string>[3] { new Word<string, string>("red", "красный"), new Word<string, string>("blue", "синий"), new Word<string, string>("green", "зеленый") };
-            var words2 = new Word<string, string>[3] { new Word<string, string>("red", "красный"), new Word<string, string>("blue", "синий"), new Word<string, string>("green", "зеленый") };
-            var dictionary = new indexators.Dictionary<string, string>(words);
-            Console.WriteLine(dictionary["red"]);
-            dictionary["red"] = "Темно-красный";
-            Console.WriteLine(dictionary["red"]);
+            //var words = new Word<string, string>[3] { new Word<string, string>("red", "красный"), new Word<string, string>("blue", "синий"), new Word<string, string>("green", "зеленый") };
+            //var words2 = new Word<string, string>[3] { new Word<string, string>("red", "красный"), new Word<string, string>("blue", "синий"), new Word<string, string>("green", "зеленый") };
+            //var dictionary = new indexators.Dictionary<string, string>(words);
+            //Console.WriteLine(dictionary["red"]);
+            //dictionary["red"] = "Темно-красный";
+            //Console.WriteLine(dictionary["red"]);
 
-            foreach (var pair in dictionary)
-            {
-                Console.WriteLine(pair);
-            }
+            //foreach (var pair in dictionary)
+            //{
+            //    Console.WriteLine(pair);
+            //}
 
-            var genericArray = new GenericArray<indexators.Dictionary<string, string>>(new List<indexators.Dictionary<string, string>>() { dictionary });
-            for (int i = 0; i < genericArray.GetLength(); i++)
-            {
-                var ite = genericArray[i];
-                Console.WriteLine(ite);
-                int a = ite.GetLength();
-                foreach (var item in ite)
-                {
-                    Console.WriteLine("\t" + item);
-                }
-            }
-            Console.WriteLine(2);
-            genericArray.AddToArr(new indexators.Dictionary<string, string>(words2));
-            for (int i = 0; i < genericArray.GetLength(); i++)
-            {
-                var item = genericArray[i];
-                Console.WriteLine(item);
-                foreach (var it in item)
-                {
-                    Console.WriteLine("\t" + it);
-                }
-            }
+            //var genericArray = new GenericArray<indexators.Dictionary<string, string>>(new List<indexators.Dictionary<string, string>>() { dictionary });
+            //for (int i = 0; i < genericArray.GetLength(); i++)
+            //{
+            //    var ite = genericArray[i];
+            //    Console.WriteLine(ite);
+            //    int a = ite.GetLength();
+            //    foreach (var item in ite)
+            //    {
+            //        Console.WriteLine("\t" + item);
+            //    }
+            //}
+
+            //Console.WriteLine(2);
+            //genericArray.AddToArr(new indexators.Dictionary<string, string>(words2));
+            //for (int i = 0; i < genericArray.GetLength(); i++)
+            //{
+            //    var item = genericArray[i];
+            //    Console.WriteLine(item);
+            //    foreach (var it in item)
+            //    {
+            //        Console.WriteLine("\t" + it);
+            //    }
+            //}
 
 
 

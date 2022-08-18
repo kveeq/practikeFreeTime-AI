@@ -18,10 +18,7 @@ namespace Yields.indexators
         public T Key { get; set; }
         public Y Value { get; set; }
 
-        public override string ToString()
-        {
-            return $"{Key.ToString()} - {Value.ToString()}";
-        }
+        public override string ToString() => $"{Key} - {Value}";
     }
 
     public class Dictionary<T, Y>
@@ -43,7 +40,7 @@ namespace Yields.indexators
             //    new Word<string, string>("whistringe", "белый"),
             //    new Word<string, string>("stringellow", "желтый"),
             //    new Word<string, string>("black", "черный"),
-            //    new Word<string, string>("grastring", "серый"),
+           //    new Word<string, string>("grastring", "серый"),
             //};
         }
 
@@ -52,11 +49,11 @@ namespace Yields.indexators
             return words.Length;
         }
 
-        public IEnumerator<Word<T, Y>> GetEnumerator()
+        public IEnumerator<string> GetEnumerator()
         {
             foreach (var item in words)
             {
-                yield return item;
+                yield return item.ToString();
             }
         }
 

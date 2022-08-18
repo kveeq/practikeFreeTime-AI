@@ -6,12 +6,23 @@ using System.Threading.Tasks;
 
 namespace Yields.Werner
 {
-    public class Transport : ITransport
+    public abstract class Transport : ITransport
     {
-        public int GetTime(int distance, int speed)
+        const int minSpeed = 0;
+        private static int maxSpeed = 100;
+
+        public int MaxSpeed { get => maxSpeed; set { if (value > 0) maxSpeed = value; } }
+
+        public void Move()
         {
-            return distance / speed;
+            Console.WriteLine($"{this.GetType().Name} moving");
         }
+
+        public void Run()
+        {
+            Console.WriteLine($"{this.GetType().Name} Running");
+        }
+
         public void Start()
         {
             Console.WriteLine($"{this.GetType().Name} Start");
@@ -23,20 +34,29 @@ namespace Yields.Werner
         }
     }
 
-    public class Car : Transport, IGo
+    public class Car : Transport, IMoveable
     {
-        public void Go()
-        {
-            Console.WriteLine($"{this.GetType().Name} Go");
-        }
 
-        public void Remen()
+    }
+
+    public class Moto : Transport, IMoveable
+    {
+
+        public void BeforeUp()
         {
-            Console.WriteLine($"{this.GetType().Name} Remen");
+            Console.WriteLine($"{this.GetType().Name} Upping");
         }
     }
 
-    public class Flyer : Transport, IFly
+    public class Human : Transport, IHumanable
+    {
+        public void Jump()
+        {
+            Console.WriteLine($"{this.GetType().Name} Jumping");
+        }
+    }
+
+    public class Flyer : Transport, IFlyable
     {
         public void Fly()
         {
@@ -46,6 +66,19 @@ namespace Yields.Werner
         public void Katapult()
         {
             Console.WriteLine($"{this.GetType().Name} Katapult");
+        }
+    }
+
+    public class Swimmer : Transport, ISwimable
+    {
+        public void Shvartovat()
+        {
+            Console.WriteLine($"{this.GetType().Name} Svarting");
+        }
+
+        public void Swim()
+        {
+            Console.WriteLine($"{this.GetType().Name} Swimming");
         }
     }
 }
