@@ -36,13 +36,16 @@ namespace Yields.Werner
             HpPlus = hpPlus;
         }
 
-        public abstract int HpPlus { get; set; }
+        public int HpPlus { get; set; }
         public abstract ToplivoTypes Type { get; set; }
 
         // Bak transport
         public void TopEat(Transport movist)
         {
-            movist.Toplivo += HpPlus;
+            if (movist.Bak < HpPlus + movist.Toplivo)
+                movist.Toplivo = movist.Bak;
+            else
+                movist.Toplivo += HpPlus;
         }
     }
 
@@ -52,8 +55,7 @@ namespace Yields.Werner
         {
         }
 
-        public override int HpPlus { get; set; }
-        public override ToplivoTypes Type { get; set; }
+        public override ToplivoTypes Type { get; set; } = ToplivoTypes.Benz;
     }
 
     public class Dizel : Toplivo
@@ -61,8 +63,7 @@ namespace Yields.Werner
         public Dizel (int hpPlus) : base(hpPlus)
         { }
 
-        public override int HpPlus { get; set; }
-        public override ToplivoTypes Type { get; set; }
+        public override ToplivoTypes Type { get; set; } = ToplivoTypes.Dizel;
     }
 
     public class Orange : Food, IFruct

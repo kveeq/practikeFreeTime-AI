@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace Yields.Werner
 {
-    public interface ITransport
+    public interface ITransport : IMoveable
     {
+        event Action<string> ToplivoChanged;
+        int Bak { get;set; }
         void Start();
         void Stop();
         void SetToplivo(IToplivo toplivo);
     }
-    public interface IMoveable : ITransport
+    public interface IMoveable
     {
-        event Action<string> ToplivoChanged;
         void Move();
         void Run();
         void Jump() { }
@@ -35,9 +36,12 @@ namespace Yields.Werner
 
     public interface IHumanable : IMoveable
     {
+        public event Action<string> HumanDead;
+        event Action<string> HpChange;
         int Hp { get; set; }
         void Eat(Food food);
         void Living();
-        event Action<string> HpChange;
+        void Hit(IHumanable human2);
+        void Hit(IHumanable human2, Weapon weapon);
     }
 }

@@ -15,27 +15,22 @@ namespace Yields
 
         public static void Main()
         {
-            IMoveable transport = new Car();
+            ITransport transport = new Car();
             transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
             transport.Start();
+            transport.SetToplivo(new Benz92(-83));
             transport.Move();
-            transport.SetToplivo(new Benz92(23));
             transport.Stop();
             transport.Jump();
-            transport = new Human();
-            transport.Start();
-            transport.Move();
-            transport.Jump();
-            transport.SetToplivo(new Benz92(50));
-            transport.Stop();
+            transport.SetToplivo(new Benz92(13));
             transport = new Moto();
             transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
             transport.Start();
             transport.Move();
             transport.Jump();
             transport.BeforeUp();
-            transport.SetToplivo(new Benz92(12));
             transport.Stop();
+            transport.SetToplivo(new Benz92(30));
             IFlyable flyTransport = new Flyer();
             flyTransport.Start();
             flyTransport.Fly();
@@ -46,15 +41,30 @@ namespace Yields
             swimTransport.Swim();
             swimTransport.Shvartovat();
             swimTransport.Stop();
+
+
+            Console.WriteLine("\n\n");
+            IHumanable human2 = new Human();
+            human2.HumanDead += (mess) => Console.WriteLine(mess);
+            human2.HpChange += (mess) => Console.WriteLine(mess); 
+            human2.Move();
+            human2.Jump();
+            human2.Eat(new Meat(20));
+            human2.Eat(new Orange(10));
+            human2.Living();
+
+            Console.WriteLine();
             IHumanable human = new Human();
+            human.HumanDead += (mess) => Console.WriteLine(mess);
             human.HpChange += (mess) => Console.WriteLine(mess); 
-            human.Start();
             human.Move();
+            human.Hit(human2);
             human.Jump();
             human.Eat(new Meat(20));
             human.Eat(new Orange(10));
             human.Living();
-            human.Stop();
+
+            human2.Eat(new Meat(20));
 
 
             //ScriptEngine engine = Python.CreateEngine();
@@ -66,10 +76,10 @@ namespace Yields
             //runtime.ExecuteFile(@"C:\Users\intern\source\repos\Yields\Yields\PythonRuby\testRuby.rb");
 
 
-            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            var handle = new MachineLearning.Class1(Console.ReadLine());
-            handle.Handling();
+            //MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            //MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            //var handle = new MachineLearning.Class1(Console.ReadLine());
+            //handle.Handling();
 
             //var class1 = new Doctor(true);
             //var a = class1.GetType();

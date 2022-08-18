@@ -8,16 +8,22 @@ namespace Yields.Werner
 {
     public abstract class Transport : ITransport, IMoveable
     {
+        public int Bak { get; set; } = 100;
         public event Action<string> ToplivoChanged;
         const int minSpeed = 0;
         private static int maxSpeed = 100;
         private int toplivo = 100; 
-        public int Toplivo { get => toplivo; set { ToplivoChanged?.Invoke($"Топливо изменилось на {value - toplivo}: Toplivo = {toplivo}"); toplivo = value; } }
+        public int Toplivo { get => toplivo; set { toplivo = value; ToplivoChanged?.Invoke($"Топливо изменилось: {toplivo} л."); } }
 
         public int MaxSpeed { get => maxSpeed; set { if (value > 0) maxSpeed = value; } }
 
         public void Move()
         {
+            if (toplivo < 20)
+            {
+                Console.WriteLine($"{this.GetType().Name} топлива не хватает");
+                return;
+            }
             Console.WriteLine($"{this.GetType().Name} moving");
             Toplivo -= 20;
         }
@@ -39,7 +45,7 @@ namespace Yields.Werner
 
         public void SetToplivo(IToplivo toplivo)
         {
-            toplivo.TopEat(this);
+                toplivo.TopEat(this);
         }
     }
 
@@ -48,7 +54,7 @@ namespace Yields.Werner
 
     }
 
-    public class Moto : Transport
+    public class Moto : Transport, IMoveable
     {
         public void BeforeUp()
         {
@@ -56,27 +62,74 @@ namespace Yields.Werner
         }
     }
 
-    public class Human : Transport, IHumanable
+    public class Human : IHumanable
     {
         private int hp = 100;
-        public int Hp { get => hp; set  { hp = value; HpChange?.Invoke($"Здоровье изменилось - {Hp}"); } }
+        private bool isDead = false;
+        public int Hp { 
+            get => hp; 
+            set  
+            {
+                hp = value;
+                if (value < 0)
+                {
+                    HumanDead?.Invoke($"human dead");
+                    isDead = true;
+                    return;
+                }
+                HpChange?.Invoke($"Здоровье изменилось - {Hp}"); 
+            }
+        }
+
+        public int damage = 150;
 
         public event Action<string> HpChange;
+        public event Action<string> HumanDead;
 
         public void Eat(Food food)
         {
-            Console.WriteLine($"{this.GetType().Name} Eating");
+            if (isDead)
+                return;
             food.Eat(this);
+            Console.WriteLine($"{this.GetType().Name} Eating");
         }
 
         public void Jump()
         {
+            if (isDead)
+                return;
             Console.WriteLine($"{this.GetType().Name} Jumping");
         }
 
         public void Living()
         {
+            if (isDead)
+                return;
             Console.WriteLine($"{this.GetType().Name} Living");
+        }
+
+        public void Hit(IHumanable human2)
+        {
+            if (isDead)
+                return;
+            human2.Hp -= damage;
+        }     
+        
+        public void Hit(IHumanable human2, Weapon weapon)
+        {
+            if (isDead)
+                return;
+            human2.Hp -= weapon.Damage;
+        }
+
+        public void Move()
+        {
+            Console.WriteLine($"{this.GetType().Name} Moving");
+        }
+
+        public void Run()
+        {
+            Console.WriteLine($"{this.GetType().Name} Running");
         }
     }
 
