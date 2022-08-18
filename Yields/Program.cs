@@ -83,33 +83,41 @@ namespace Yields
             //    Console.WriteLine(ex.Message);
             //}
 
-            //Dictionary dictionary = new Dictionary();
-            //Console.WriteLine(dictionary["red"]);
-            //dictionary["red"] = "Темно-красный";
-            //Console.WriteLine(dictionary["red"]);
 
-            //GenericArray<Dictionary> genericArray = new GenericArray<Dictionary>(new List<Dictionary>() {dictionary});
-            //for (int i = 0; i < genericArray.GetLength(); i++)
-            //{
-            //    var ite = genericArray[i];
-            //    Console.WriteLine(ite);
-            //    int a = ite.GetLength();
-            //    for (int j = 0; j < a; j++)
-            //    {
-            //        Console.WriteLine("\t" + ite[j]);
-            //    }
-            //}
-            //Console.WriteLine(2);
-            //genericArray.AddToArr(new Dictionary());
-            //for (int i = 0; i < genericArray.GetLength(); i++)
-            //{
-            //    var item = genericArray[i];
-            //    Console.WriteLine(item);
-            //    for (int j = 0; j < item.GetLength(); j++)
-            //    {
-            //        Console.WriteLine("\t" + item[j]);
-            //    }
-            //}
+            var words = new Word<string, string>[3] { new Word<string, string>("red", "красный"), new Word<string, string>("blue", "синий"), new Word<string, string>("green", "зеленый") };
+            var words2 = new Word<string, string>[3] { new Word<string, string>("red", "красный"), new Word<string, string>("blue", "синий"), new Word<string, string>("green", "зеленый") };
+            var dictionary = new indexators.Dictionary<string, string>(words);
+            Console.WriteLine(dictionary["red"]);
+            dictionary["red"] = "Темно-красный";
+            Console.WriteLine(dictionary["red"]);
+
+            foreach (var pair in dictionary)
+            {
+                Console.WriteLine(pair);
+            }
+
+            var genericArray = new GenericArray<indexators.Dictionary<string, string>>(new List<indexators.Dictionary<string, string>>() { dictionary });
+            for (int i = 0; i < genericArray.GetLength(); i++)
+            {
+                var ite = genericArray[i];
+                Console.WriteLine(ite);
+                int a = ite.GetLength();
+                foreach (var item in ite)
+                {
+                    Console.WriteLine("\t" + item);
+                }
+            }
+            Console.WriteLine(2);
+            genericArray.AddToArr(new indexators.Dictionary<string, string>(words2));
+            for (int i = 0; i < genericArray.GetLength(); i++)
+            {
+                var item = genericArray[i];
+                Console.WriteLine(item);
+                foreach (var it in item)
+                {
+                    Console.WriteLine("\t" + it);
+                }
+            }
 
 
 

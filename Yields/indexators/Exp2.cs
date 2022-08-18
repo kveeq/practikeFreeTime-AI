@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,35 +7,44 @@ using System.Threading.Tasks;
 
 namespace Yields.indexators
 {
-    public class Word
+    public class Word<T, Y>
     {
-        public Word(string present, string translated)
+        public Word(T present, Y translated)
         {
-            Present = present;
-            Translated = translated;
+            Key = present;
+            Value = translated;
         }
 
-        public string Present { get; set; }
-        public string Translated { get; set; }
+        public T Key { get; set; }
+        public Y Value { get; set; }
 
         public override string ToString()
         {
-            return $"{Present} - {Translated}";
+            return $"{Key.ToString()} - {Value.ToString()}";
         }
     }
 
-    public class Dictionary
+    public class Dictionary<T, Y>
     {
-        Word[] words;
+        Word<T, Y>[] words;
 
-        public Dictionary()
+
+        public Dictionary(Word<T, Y>[] word)
         {
-            words = new Word[]
-            {
-                new Word("red", "красный"),
-                new Word("blue", "синий"),
-                new Word("green", "зеленый")
-            };
+            words = word;
+
+            //words = new Word<T, Y>[]
+            //{
+            //    new Word<T, Y>("red", "красный"),
+            //    new Word<string, string>("blue", "синий"),
+            //    new Word<string, string>("green", "зеленый"),
+            //    new Word<string, string>("excepstringion", "ошибка"),
+            //    new Word<string, string>("word", "слово"),
+            //    new Word<string, string>("whistringe", "белый"),
+            //    new Word<string, string>("stringellow", "желтый"),
+            //    new Word<string, string>("black", "черный"),
+            //    new Word<string, string>("grastring", "серый"),
+            //};
         }
 
         public int GetLength()
@@ -42,35 +52,43 @@ namespace Yields.indexators
             return words.Length;
         }
 
-        public string this[string name]
+        public IEnumerator<Word<T, Y>> GetEnumerator()
+        {
+            foreach (var item in words)
+            {
+                yield return item;
+            }
+        }
+
+        public Y this[T name]
         {
             get
             {
                 foreach (var item in words)
                 {
-                    if (item.Present == name)
-                        return item.Translated;
+                    if (item.Key.Equals(name))
+                        return item.Value;
                 }
-                return null;
+                return default;
             }
             set
             {
                 foreach (var item in words)
                 {
-                    if (item.Present == name)
-                        item.Translated = value;
+                    if (item.Key.Equals(name))
+                        item.Value = value;
                 }
             }
         }
 
-        public Word this[int index]
-        {
-            get
-            {
-                if (index >= 0 && index < words.Length)
-                    return words[index];
-                return null;
-            }
-        }
+        //public Word<T, Y> this[int index]
+        //{
+        //    get
+        //    {
+        //        if (index >= 0 && index < words.Length)
+        //            return words[index];
+        //        return null;
+        //    }
+        //}
     }
 }
