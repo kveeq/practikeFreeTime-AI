@@ -9,7 +9,7 @@ namespace Yields.Werner
     public interface IWeapon
     {
         public int Damage { get; }
-        void Hit(IHumanable human);
+        void Hit(IHumanable human, IHumanable humanSet);
     }
 
     public interface IBumm : IWeapon
@@ -19,11 +19,11 @@ namespace Yields.Werner
 
     public interface IKidak : IWeapon
     {
-        void Kinut(IHumanable human);
+        void Kinut(IHumanable human, IHumanable humanSet);
     }
 
     public interface IStrel : IWeapon
     {
-        void Strel(IHumanable human);
+        void Strel(IHumanable human, IHumanable humanSet);
     }
 }

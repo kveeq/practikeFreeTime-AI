@@ -10,13 +10,45 @@ using IronRuby;
 
 namespace Yields
 {
+    delegate void TreeVisitor<T>(T nodeData);
+
+    class NTree<T>
+    {
+        private T data;
+        private LinkedList<NTree<T>> children;
+
+        public NTree(T data)
+        {
+            this.data = data;
+            children = new LinkedList<NTree<T>>();
+        }
+
+        public void AddChild(T data)
+        {
+            children.AddFirst(new NTree<T>(data));
+        }
+
+        public NTree<T> GetChild(int i)
+        {
+            foreach (NTree<T> n in children)
+                if (--i == 0)
+                    return n;
+            return null;
+        }
+
+        public void Traverse(NTree<T> node, TreeVisitor<T> visitor)
+        {
+            visitor(node.data);
+            foreach (NTree<T> kid in node.children)
+                Traverse(kid, visitor);
+            Console.WriteLine();
+        }
+    }
+
     public class Program
     {
         public static void Main()
         {
-            Stepik6();
-
-
             MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
             MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
             var handle = new MachineLearning.Class1(Console.ReadLine());
@@ -49,11 +81,36 @@ namespace Yields
             //swimTransport.Shvartovat();
             //swimTransport.Stop();
 
+            //NTree<int> tree = new NTree<int>(3);
+            //tree.AddChild(1);
+            //tree.AddChild(2);
+            ////tree.AddChild(3);
+            //var b = tree.GetChild(1);
+            //b.AddChild(5);
+            //b = tree.GetChild(2);
+            //b.AddChild(5);
+            //b.AddChild(5);
+            //b.Traverse(b, Console.WriteLine);
+            //Console.WriteLine();
+            //tree.Traverse(tree, Console.WriteLine);
+
+            //b = tree.GetChild(1);
+            //int count = 0;
+            //while(b != null)
+            //{
+            //    if (b == null)
+            //        break;
+            //    b.Traverse(b, Console.WriteLine);
+            //    Console.WriteLine("\n\n\n\n");
+            //    b = b.GetChild(count);
+            //    count++;
+            //}
+
 
             //Console.WriteLine("\n\n");
             //IHumanable human2 = new Human();
             //human2.HumanDead += (mess) => Console.WriteLine(mess);
-            //human2.HpChange += (mess) => Console.WriteLine(mess); 
+            //human2.HpChange += (mess) => Console.WriteLine(mess);
             //human2.Move();
             //human2.Jump();
             //human2.Eat(new Meat(20));
@@ -63,7 +120,7 @@ namespace Yields
             //Console.WriteLine();
             //IHumanable human = new Human();
             //human.HumanDead += (mess) => Console.WriteLine(mess);
-            //human.HpChange += (mess) => Console.WriteLine(mess); 
+            //human.HpChange += (mess) => Console.WriteLine(mess);
             //human.Move();
             //human.Hit(human2);
             //human.Jump();
@@ -72,8 +129,6 @@ namespace Yields
             //human.Living();
 
             //human2.Eat(new Meat(20));
-
-
 
             //Matrix<int> matrix = new Matrix<int>(3,4);
             //for (int i = 0; i < matrix.RowCount; i++)
@@ -298,6 +353,7 @@ namespace Yields
             Console.WriteLine($"\n\n{Math.Sign(2)}");
             Console.WriteLine($"{Math.Sign(0)}");
             Console.WriteLine($"{Math.Sign(-2)}");
+
         }
 
         public class wf<T> : IComparable

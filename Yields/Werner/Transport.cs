@@ -127,15 +127,15 @@ namespace Yields.Werner
             human2.Hp -= damage;
         }     
         
-        public void Hit(IHumanable human2, Weapon weapon)
+         public void Hit(IHumanable human2, Weapon weapon)
         {
             if (isDead)
             {
                 Console.WriteLine("human dead");
                 return;
             }
-            weapon.Hit(human2);
-            human2.Hp -= weapon.Damage;
+            weapon.Hit(this, human2);
+            //human2.Hp -= weapon.Damage;
         }
 
         public void Move()

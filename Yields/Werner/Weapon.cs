@@ -13,8 +13,7 @@ namespace Yields.Werner
         {
             Damage = damage;
         }
-
-        public void Hit(IHumanable human)
+        public void Hit(IHumanable human, IHumanable humanSet)
         {
             throw new NotImplementedException();
         }
@@ -26,9 +25,21 @@ namespace Yields.Werner
         {
         }
 
-        public void Kinut(IHumanable human)
+        public void Kinut(IHumanable humanGet, IHumanable humanSet)
         {
-            human.Hit();
+            humanGet.Hit(humanSet);
+        }
+    }
+
+    public class Step : Weapon, IStrel
+    {
+        public Step(int damage) : base(damage)
+        {
+        }
+
+        public void Strel(IHumanable human, IHumanable humanSet)
+        {
+            throw new NotImplementedException();
         }
     }
 }
