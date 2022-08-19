@@ -134,6 +134,7 @@ namespace Yields.Werner
                 Console.WriteLine("human dead");
                 return;
             }
+            weapon.Hit(human2);
             human2.Hp -= weapon.Damage;
         }
 

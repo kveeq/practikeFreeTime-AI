@@ -10,12 +10,13 @@ using IronRuby;
 
 namespace Yields
 {
-    
-
     public class Program
     {
         public static void Main()
         {
+            Stepik6();
+
+
             MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
             MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
             var handle = new MachineLearning.Class1(Console.ReadLine());
@@ -261,25 +262,62 @@ namespace Yields
                 for (int j = 0; j < 4; j++)
                 {
                     string? str = Console.ReadLine();
-                    str1[j] = str;
+                    str1[j] = str.Trim();
                 }
                 PersonalDela? marks = new(str1[0], str1[1], str1[2], str1[3]);
                 mark[i] = marks;
             }
+            var afr = mark.GetEnumerator();
+            while(true)
+            {
+                if (!afr.MoveNext())
+                    break;
+                Console.WriteLine(afr?.Current);
+            }
+
+            Console.WriteLine();
 
             for (int i = 0; i < n; i++)
             {
                 for(int j = 0; j < n-1; j++)
                 {
-                    (mark[j], mark[j + 1]) = (mark[j+1], mark[j]);
+                    if (mark[j].CompareTo(mark[j + 1]) < 0)
+                    {
+                        (mark[j], mark[j + 1]) = (mark[j + 1], mark[j]);
+                    }
                 }
             }
-
-            //Sort<PersonalDela[]>(mark);
+            wf<PersonalDela> amgt = new wf<PersonalDela>();
+            //amgt.Sort(amgt[], n);
 
             foreach (var item in mark)
             {
                 Console.WriteLine(item);
+            }
+
+            Console.WriteLine($"\n\n{Math.Sign(2)}");
+            Console.WriteLine($"{Math.Sign(0)}");
+            Console.WriteLine($"{Math.Sign(-2)}");
+        }
+
+        public class wf<T> : IComparable
+        {
+            public int CompareTo(object obj)
+            {
+                var a = (T)obj;
+                return this.Equals(obj).CompareTo(this.Equals(obj));
+            }
+
+            public void Sort(wf<T>[] mark, int n)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n - 1; j++)
+                    {
+                        if (mark[i].CompareTo(mark[i + 1]) < 0)
+                            (mark[j], mark[j + 1]) = (mark[j + 1], mark[j]);
+                    }
+                }
             }
         }
 

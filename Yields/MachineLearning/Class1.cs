@@ -8,18 +8,24 @@ namespace Yields.MachineLearning
 {
     public class Class1
     {
-        public static Action<string> AnswerEvent;
-        public static Func<string> QuestionEvent;
+        internal static Action<string> AnswerEvent;
+        internal static Func<string> QuestionEvent;
         public string? Text { get; set; }
-        private bool isSdat = false;
-        private bool isAnaliz = false;
-        private bool isDoctor = false;
-        private bool isKonsult = false;
-        private bool isUndefined = false;
+        private readonly bool isSdat = false;
+        private readonly bool isAnaliz = false;
+        private readonly bool isDoctor = false;
+        private readonly bool isKonsult = false;
+        private readonly bool isUndefined = false;
 
         public Class1(string text)
         {
-            Text = text.DelProbels();
+            if(String.IsNullOrEmpty(text) || String.IsNullOrWhiteSpace(text))
+            {
+                isUndefined = true;
+                return;
+            }
+            
+            Text = text?.DelProbels();
             Text = Text?.Replace(",", "");
             string[]? str = Text?.Split(' ');
             foreach (string? item in str)
@@ -59,7 +65,7 @@ namespace Yields.MachineLearning
             {
                 if (isAnaliz)
                 {
-                    Analiz analiz = new Analiz(Text);
+                    Analiz analiz = new(Text);
                     analiz.HandleText();
                     // заглушка
                     // Console.WriteLine("Записали вас на сдачу анализов...");
@@ -84,7 +90,7 @@ namespace Yields.MachineLearning
 
         private void IsKonsultDoctorHandle()
         {
-            Doctor doctor = null;
+            Lazy<Doctor> doctor = null;
             string povt = "";
             while (doctor == null)
             {
@@ -95,7 +101,7 @@ namespace Yields.MachineLearning
                 {
                     if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
                     {
-                        doctor = new(isKonsult, DoctorSpec.Terapevt);
+                        doctor = new(new Doctor(isKonsult, DoctorSpec.Terapevt));
                     }
                 }
                 if (doctor == null)
