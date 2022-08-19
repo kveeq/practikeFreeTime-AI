@@ -47,12 +47,45 @@ namespace Yields
 
     public class Program
     {
+        private T data;
+        private LinkedList<NTree<T>> children;
+
+        public NTree(T data)
+        {
+            this.data = data;
+            children = new LinkedList<NTree<T>>();
+        }
+
+        public void AddChild(T data)
+        {
+            children.AddFirst(new NTree<T>(data));
+        }
+
+        public NTree<T> GetChild(int i)
+        {
+            foreach (NTree<T> n in children)
+                if (--i == 0)
+                    return n;
+            return null;
+        }
+
+        public void Traverse(NTree<T> node, TreeVisitor<T> visitor)
+        {
+            visitor(node.data);
+            foreach (NTree<T> kid in node.children)
+                Traverse(kid, visitor);
+            Console.WriteLine();
+        }
+    }
+
+    public class Program
+    {
         public static void Main()
         {
-            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            var handle = new MachineLearning.Class1(Console.ReadLine());
-            handle.Handling();
+            //MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            //MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            //var handle = new MachineLearning.Class1(Console.ReadLine());
+            //handle.Handling();
 
             //ITransport transport = new Car();
             //transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
@@ -128,7 +161,15 @@ namespace Yields
             //human.Eat(new Orange(10));
             //human.Living();
 
-            //human2.Eat(new Meat(20));
+            Console.WriteLine("\n\n");
+            IHumanable human2 = new Human();
+            human2.HumanDead += (mess) => Console.WriteLine(mess);
+            human2.HpChange += (mess) => Console.WriteLine(mess);
+            human2.Move();
+            human2.Jump();
+            human2.Eat(new Meat(20));
+            human2.Eat(new Orange(10));
+            human2.Living();
 
             //Matrix<int> matrix = new Matrix<int>(3,4);
             //for (int i = 0; i < matrix.RowCount; i++)
