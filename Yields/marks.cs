@@ -27,5 +27,10 @@
         {
             return this.Srednay.CompareTo(other?.Srednay);
         }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
     }
 }
