@@ -18,16 +18,18 @@ namespace Yields.MachineLearning
         private readonly bool isZabrat = false;
         private readonly bool isProcedures = false;
         private readonly bool isZakl = false;
+        private readonly bool isTest = false;
+        private readonly bool isUzi = false;
         private readonly bool isUndefined = false;
 
         public Class1(string text)
         {
-            if(String.IsNullOrEmpty(text) || String.IsNullOrWhiteSpace(text))
+            if (String.IsNullOrEmpty(text) || String.IsNullOrWhiteSpace(text))
             {
                 isUndefined = true;
                 return;
             }
-            
+
             Text = text?.DelProbels();
             Text = Text?.Replace(",", "");
             string[]? str = Text?.Split(' ');
@@ -41,7 +43,7 @@ namespace Yields.MachineLearning
                 {
                     isZabrat = true;
                 }
-                else if (item.Trim().ToLower().Contains("капельниц") || item.Contains("систем") || item.Trim().ToLower().Contains("процедур"))
+                else if (item.Trim().ToLower().Contains("капельниц") || item.Contains("систем") || item.Trim().ToLower().Contains("процедур") || item.Trim().ToLower().Contains("укол"))
                 {
                     isProcedures = true;
                 }
@@ -61,11 +63,19 @@ namespace Yields.MachineLearning
                 {
                     isKonsult = true;
                 }
+                else if (item.Trim().ToLower() == "тест" || item.Trim().ToLower().Contains("тест"))
+                {
+                    isTest = true;
+                }
+                else if (item.Trim().ToLower() == "узи" || item.Trim().ToLower().Contains("узи"))
+                {
+                    isUzi = true;
+                }
             }
 
-            if (!isSdat && !isAnaliz && !isDoctor && !isKonsult)
+            if (!isSdat && !isAnaliz && !isDoctor && !isKonsult && !isZabrat && !isProcedures && !isZakl && !isTest && !isUzi)
                 isUndefined = true;
-        
+
         }
 
         public object Handling()
@@ -120,12 +130,29 @@ namespace Yields.MachineLearning
                         }
                         else if (item.Trim().ToLower().Contains("травматолог"))
                         {
-                            doctor = new(new Doctor(isKonsult, DoctorSpec.travmatolog));
+                            doctor = new(new Doctor(isKonsult, DoctorSpec.Travmatolog));
+                        }
+                        else if (item.Trim().ToLower().Contains("невролог"))
+                        {
+                            doctor = new(new Doctor(isKonsult, DoctorSpec.Nevrolog));
                         }
                     }
+
                     if (doctor == null)
                         povt = "Назовите специальность доктора...";
                 }
+            }
+
+            if (isTest)
+            {
+                Test test = new Test(Text);
+                test.handle();
+            }
+
+            if(isUzi)
+            {
+                Uzi uzi = new Uzi(Text);
+                uzi.handle();
             }
 
             if (isKonsult)
@@ -153,11 +180,24 @@ namespace Yields.MachineLearning
                 string[] problemStrArr = problemStr?.Split(' ');
                 foreach (var item in problemStrArr)
                 {
-                    if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот"))
+                    if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот") || item.Trim().ToLower().Contains("терапевт"))
                     {
                         doctor = new(new Doctor(isKonsult, DoctorSpec.Terapevt));
                     }
+                    else if(item.Trim().ToLower().Contains("невролог")) // доделать с диагнозами
+                    {
+                        doctor = new(new Doctor(isKonsult, DoctorSpec.Nevrolog));
+                    }
+                    else if(item.Trim().ToLower().Contains("хирург")) // доделать с диагнозами
+                    {
+                        doctor = new(new Doctor(isKonsult, DoctorSpec.Hirurg));
+                    }
+                    else if(item.Trim().ToLower().Contains("травматолог")) // доделать с диагнозами
+                    {
+                        doctor = new(new Doctor(isKonsult, DoctorSpec.Travmatolog));
+                    }
                 }
+
                 if (doctor == null)
                     povt = "I not understand you...";
             }

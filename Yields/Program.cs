@@ -47,6 +47,17 @@ namespace Yields
     {
         public static void Main()
         {
+            //while(true)
+            //{
+            //    int count = 0;
+            //    foreach (var item in Console.ReadLine())
+            //    {
+            //        count++;
+            //    }
+            //    Console.WriteLine($"{count}\n");
+            //}
+
+
             MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
             MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
             var handle = new MachineLearning.Class1(Console.ReadLine());

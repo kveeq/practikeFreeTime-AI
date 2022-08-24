@@ -62,10 +62,8 @@ namespace Yields.MachineLearning
                     {
                         Recivier = new Patient();
                         Recivier.Fio = handlingStrPatFio;
-                        
+                        Class1.AnswerEvent?.Invoke("Пройдите в кабинет...");
                     }
-
-                    Class1.AnswerEvent?.Invoke("Пройдите в кабинет...");
                 }
                 else
                 {

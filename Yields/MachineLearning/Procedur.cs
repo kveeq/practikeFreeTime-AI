@@ -43,6 +43,7 @@ namespace Yields.MachineLearning
                 }
                 else
                 {
+                    Class1.AnswerEvent?.Invoke("Проходите в кабинет...");
                     // Console.WriteLine("Пройдите в кабинет... ");
                     break;
                 }

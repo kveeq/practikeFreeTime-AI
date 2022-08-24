@@ -11,7 +11,8 @@ namespace Yields.MachineLearning
         Null = 0,
         Terapevt = 1,
         Hirurg = 2,
-        travmatolog = 3,
+        Travmatolog = 3,
+        Nevrolog = 4,
     }
 
     public class Doctor
