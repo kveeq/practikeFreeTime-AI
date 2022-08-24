@@ -11,6 +11,7 @@ namespace Yields.MachineLearning
         public string Name { get; set; }
         public string Description { get; set; }
         public AnalizTypes AnalizType { get; set; }
+        public Patient Recivier { get; set; }
         private string handlingText;
 
 
@@ -33,6 +34,38 @@ namespace Yields.MachineLearning
                     Class1.AnswerEvent?.Invoke("Скажите какой анализ хотите сдать: крови, UR");
                     string handlingStrBloodType = Class1.QuestionEvent?.Invoke();
                     handle(handlingStrBloodType);
+                }
+                else
+                {
+                    // Console.WriteLine("Пройдите в кабинет... ");
+                    break;
+                }
+            }
+
+            return true;
+        }
+
+        public object GetAnaliz()
+        {
+            while (true)
+            {
+                if (Recivier == null)
+                {
+                    /*
+                        ***
+                        * спрашивать какой именно тип анализа крови они хотят делать
+                        ***
+                    */
+                    Class1.AnswerEvent?.Invoke("Скажите свое ФИО");
+                    string handlingStrPatFio = Class1.QuestionEvent?.Invoke();
+                    if (handlingStrPatFio != "")
+                    {
+                        Recivier = new Patient();
+                        Recivier.Fio = handlingStrPatFio;
+                        
+                    }
+
+                    Class1.AnswerEvent?.Invoke("Пройдите в кабинет...");
                 }
                 else
                 {

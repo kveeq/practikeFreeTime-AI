@@ -15,6 +15,9 @@ namespace Yields.MachineLearning
         private readonly bool isAnaliz = false;
         private readonly bool isDoctor = false;
         private readonly bool isKonsult = false;
+        private readonly bool isZabrat = false;
+        private readonly bool isProcedures = false;
+        private readonly bool isZakl = false;
         private readonly bool isUndefined = false;
 
         public Class1(string text)
@@ -34,6 +37,14 @@ namespace Yields.MachineLearning
                 {
                     isSdat = true;
                 }
+                else if (item.Trim().ToLower() == "заб" || item.Trim().ToLower() == "забрать")
+                {
+                    isZabrat = true;
+                }
+                else if (item.Trim().ToLower().Contains("капельниц") || item.Contains("систем") || item.Trim().ToLower().Contains("процедур"))
+                {
+                    isProcedures = true;
+                }
                 else if (item.Trim().ToLower() == "анализ" || item.Trim().ToLower() == "анализы")
                 {
                     isAnaliz = true;
@@ -41,6 +52,10 @@ namespace Yields.MachineLearning
                 else if (item.Trim().ToLower() == "доктору" || item.Trim().ToLower() == "доктор" || item.Trim().ToLower() == "врачу" || item.Contains("врач"))
                 {
                     isDoctor = true;
+                }
+                else if (item.Trim().ToLower().Contains("заключен") || item.Trim().ToLower().Contains("справк"))
+                {
+                    isZakl = true;
                 }
                 else if (item.Trim().ToLower() == "консультация" || item.Trim().ToLower().Contains("консульт"))
                 {
@@ -55,24 +70,28 @@ namespace Yields.MachineLearning
 
         public object Handling()
         {
-            if(isUndefined)
+            if (isUndefined)
             {
                 Console.WriteLine("мы вас не поняли!");
                 return false;
             }
 
-            if (isSdat)
+            if (isAnaliz)
             {
-                if (isAnaliz)
+                Analiz analiz = new(Text);
+                if (isSdat)
                 {
-                    Analiz analiz = new(Text);
                     analiz.HandleText();
                     // заглушка
                     // Console.WriteLine("Записали вас на сдачу анализов...");
                 }
+                if (isZabrat)
+                {
+                    analiz.GetAnaliz();
+                }
             }
 
-            if (isDoctor)
+            if (isDoctor && !isZakl)
             {
                 if (!isKonsult)
                 {
@@ -80,9 +99,44 @@ namespace Yields.MachineLearning
                 }
             }
 
+            if (isZakl)
+            {
+                Lazy<Doctor> doctor = null;
+                string povt = "";
+                while (doctor == null)
+                {
+                    AnswerEvent?.Invoke("К какому доктору?... " + povt);
+                    string problemStr = Console.ReadLine();
+                    string[] problemStrArr = problemStr?.Split(' ');
+                    foreach (var item in problemStrArr)
+                    {
+                        if (item.Trim().ToLower().Contains("терапевт"))
+                        {
+                            doctor = new(new Doctor(isKonsult, DoctorSpec.Terapevt));
+                        }
+                        else if (item.Trim().ToLower().Contains("хирург"))
+                        {
+                            doctor = new(new Doctor(isKonsult, DoctorSpec.Hirurg));
+                        }
+                        else if (item.Trim().ToLower().Contains("травматолог"))
+                        {
+                            doctor = new(new Doctor(isKonsult, DoctorSpec.travmatolog));
+                        }
+                    }
+                    if (doctor == null)
+                        povt = "Назовите специальность доктора...";
+                }
+            }
+
             if (isKonsult)
             {
                 IsKonsultDoctorHandle();
+            }
+
+            if(isProcedures)
+            {
+                Procedure proc = new Procedure(Text);
+                proc.HandleText();
             }
 
             return true;
