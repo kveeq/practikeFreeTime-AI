@@ -152,7 +152,7 @@ namespace Yields.MachineLearning
             if(isUzi)
             {
                 Uzi uzi = new Uzi(Text);
-                uzi.handle();
+                uzi.hundle();
             }
 
             if (isKonsult)
