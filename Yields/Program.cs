@@ -49,10 +49,10 @@ namespace Yields
     {
         public static void Main()
         {
-            //MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            //MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            //var handle = new MachineLearning.Class1(Console.ReadLine());
-            //handle.Handling();
+            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            var handle = new MachineLearning.Class1(Console.ReadLine());
+            handle.Handling();
 
             //ITransport transport = new Car();
             //transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
@@ -128,15 +128,15 @@ namespace Yields
             //human.Eat(new Orange(10));
             //human.Living();
 
-            Console.WriteLine("\n\n");
-            IHumanable human2 = new Human();
-            human2.HumanDead += (mess) => Console.WriteLine(mess);
-            human2.HpChange += (mess) => Console.WriteLine(mess);
-            human2.Move();
-            human2.Jump();
-            human2.Eat(new Meat(20));
-            human2.Eat(new Orange(10));
-            human2.Living();
+            //Console.WriteLine("\n\n");
+            //IHumanable human2 = new Human();
+            //human2.HumanDead += (mess) => Console.WriteLine(mess);
+            //human2.HpChange += (mess) => Console.WriteLine(mess);
+            //human2.Move();
+            //human2.Jump();
+            //human2.Eat(new Meat(20));
+            //human2.Eat(new Orange(10));
+            //human2.Living();
 
             //Matrix<int> matrix = new Matrix<int>(3,4);
             //for (int i = 0; i < matrix.RowCount; i++)

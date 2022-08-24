@@ -45,7 +45,7 @@ namespace Yields.Werner
 
         public void SetToplivo(IToplivo toplivo)
         {
-                toplivo.TopEat(this);
+            toplivo.TopEat(this);
         }
     }
 
@@ -66,6 +66,11 @@ namespace Yields.Werner
     {
         private int hp = 100;
         private bool isDead = false;
+        public int damage = 10;
+
+        public event Action<string> HpChange;
+        public event Action<string> HumanDead;
+
         public int Hp { 
             get => hp; 
             set  
@@ -77,14 +82,11 @@ namespace Yields.Werner
                     isDead = true;
                     return;
                 }
+
                 HpChange?.Invoke($"Здоровье изменилось - {Hp}"); 
             }
         }
 
-        public int damage = 10;
-
-        public event Action<string> HpChange;
-        public event Action<string> HumanDead;
 
         public void Eat(Food food)
         {
@@ -93,28 +95,28 @@ namespace Yields.Werner
                 Console.WriteLine("human dead");
                 return;
             }
+
             food.Eat(this);
             Console.WriteLine($"{this.GetType().Name} Eating");
         }
 
         public void Jump()
         {
-            if (isDead)
-            {
-                Console.WriteLine("human dead");
-                return;
-            }
-            Console.WriteLine($"{this.GetType().Name} Jumping");
+            if (!isDead)
+                Console.WriteLine($"{this.GetType().Name} Jumping");
+                
+            Console.WriteLine("human dead");
+            return;
+
         }
 
         public void Living()
         {
-            if (isDead)
-            {
-                Console.WriteLine("human dead");
-                return;
-            }
-            Console.WriteLine($"{this.GetType().Name} Living");
+            if (!isDead)
+                Console.WriteLine($"{this.GetType().Name} Living");
+
+            Console.WriteLine("human dead");
+            return;
         }
 
         public void Hit(IHumanable human2)
@@ -124,6 +126,7 @@ namespace Yields.Werner
                 Console.WriteLine("human dead");
                 return;
             }
+
             human2.Hp -= damage;
         }     
         
@@ -134,6 +137,7 @@ namespace Yields.Werner
                 Console.WriteLine("human dead");
                 return;
             }
+
             weapon.Hit(this, human2);
             //human2.Hp -= weapon.Damage;
         }
