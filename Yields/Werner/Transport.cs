@@ -9,7 +9,7 @@ namespace Yields.Werner
     public abstract class Transport : ITransport, IMoveable
     {
         public int Bak { get; set; } = 100;
-        public event Action<string> ToplivoChanged;
+        public event Action<string>? ToplivoChanged;
         const int minSpeed = 0;
         private static int maxSpeed = 100;
         private int toplivo = 100; 
@@ -83,8 +83,8 @@ namespace Yields.Werner
 
         public int damage = 10;
 
-        public event Action<string> HpChange;
-        public event Action<string> HumanDead;
+        public event Action<string>? HpChange;
+        public event Action<string>? HumanDead;
 
         public void Eat(Food food)
         {

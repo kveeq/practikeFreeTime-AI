@@ -5,6 +5,7 @@ using Yields.MachineLearning;
 using FirebirdSql.Data.FirebirdClient;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using System.Numerics;
 
 namespace Yields
 {
@@ -26,7 +27,7 @@ namespace Yields
             children.AddFirst(new NTree<T>(data));
         }
 
-        public NTree<T> GetChild(int i)
+        public NTree<T>? GetChild(int i)
         {
             foreach (NTree<T> n in children)
                 if (--i == 0)
@@ -50,6 +51,7 @@ namespace Yields
             //while (true)
             //    Console.WriteLine($"{Console.ReadLine().Length}\n");
 
+            //Stepen();
 
             MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
             MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
@@ -303,6 +305,25 @@ namespace Yields
             //Console.ReadKey();
         }
 
+        public static void Stepen()
+        {
+            int n = Convert.ToInt32(Console.ReadLine());
+            BigInteger big = BigInteger.Pow(new BigInteger(2), n);
+            Console.WriteLine(big);
+
+            string template = "1";
+            //string result = "";
+
+            for (int j = 0; j < n; j++)
+            {
+                for (int i = 0; i < template.Length; i++)
+                {
+                    template = (Convert.ToInt64(template[i]) * 2).ToString();
+                }
+            }
+            Console.WriteLine(template);
+        }
+
         // та самая с учащимися
         private static void Stepik6()
         {
@@ -323,13 +344,13 @@ namespace Yields
             PersonalDela[]? mark = new PersonalDela[n];
             for (int i = 0; i < n; i++)
             {
-                string[]? str1 = new string[4];
+                string?[]? str1 = new string[4];
                 for (int j = 0; j < 4; j++)
                 {
                     string? str = Console.ReadLine();
-                    str1[j] = str.Trim();
+                    str1[j] = str?.Trim();
                 }
-                PersonalDela? marks = new(str1[0], str1[1], str1[2], str1[3]);
+                PersonalDela? marks = new(str1?[0], str1?[1], str1?[2], str1?[3]);
                 mark[i] = marks;
             }
             var afr = mark.GetEnumerator();
@@ -368,9 +389,9 @@ namespace Yields
 
         public class wf<T> : IComparable
         {
-            public int CompareTo(object obj)
+            public int CompareTo(object? obj)
             {
-                var a = (T)obj;
+                var a = (T?)obj;
                 return this.Equals(obj).CompareTo(this.Equals(obj));
             }
 
@@ -398,7 +419,7 @@ namespace Yields
             {
                 string? str = Console.ReadLine();
                 string[]? str1 = str?.Split(' ');
-                Marks? marks = new(str1[1], str1[0], int.Parse(str1[3]), int.Parse(str1[4]), int.Parse(str1[2]));
+                Marks? marks = new(str1?[1], str1?[0], int.Parse(str1[3]), int.Parse(str1[4]), int.Parse(str1[2]));
                 mark[i] = marks;
             }
 
@@ -425,7 +446,7 @@ namespace Yields
         {
             int? n = Convert.ToInt32(Console.ReadLine());
             string? str = Console.ReadLine();
-            string[]? str1 = str.Split(' ');
+            string[]? str1 = str?.Split(' ');
             int? count = 0;
 
             for (int i = 0; i < n; i++)
@@ -433,7 +454,7 @@ namespace Yields
                 bool state = false;
                 for (int j = i+1; j < n; j++)
                 {
-                    if (str[i] == str[j])
+                    if (str?[i] == str?[j])
                     {
                         state = true;
                         break;
@@ -454,10 +475,10 @@ namespace Yields
             for(int? i = 0; i < n; i++)
             {
                 string? str = Console.ReadLine();
-                string[]? str1 = str.Split(' ');
-                srMath += Convert.ToDouble(str1[2]);
-                srPhys += Convert.ToDouble(str1[3]);
-                srInform += Convert.ToDouble(str1[4]);
+                string[]? str1 = str?.Split(' ');
+                srMath += Convert.ToDouble(str1?[2]);
+                srPhys += Convert.ToDouble(str1?[3]);
+                srInform += Convert.ToDouble(str1?[4]);
                 srPhys = Convert.ToDouble(srPhys.ToString());
             }
 
@@ -482,10 +503,10 @@ namespace Yields
             for (int? i = 0; i < n; i++)
             {
                 string? str = Console.ReadLine();
-                string[]? str1 = str.Split(' ');
-                if(str1[2] == "5" || str1[2] == "4")
-                    if(str1[3] == "5" || str1[3] == "4")
-                        if(str1[4] == "5" || str1[4] == "4")
+                string[]? str1 = str?.Split(' ');
+                if(str1?[2] == "5" || str1?[2] == "4")
+                    if(str1?[3] == "5" || str1?[3] == "4")
+                        if(str1?[4] == "5" || str1?[4] == "4")
                             names.Add(str1[0] + " " + str1[1]);
             }
 
@@ -502,8 +523,8 @@ namespace Yields
             for (int? i = 0; i < n; i++)
             {
                 string? str = Console.ReadLine();
-                string[]? str1 = str.Split(' ');
-                Marks? marks = new Marks(str1[1], str1[0], int.Parse(str1[3]), int.Parse(str1[4]), int.Parse(str1[2]));
+                string[]? str1 = str?.Split(' ');
+                Marks? marks = new Marks(str1?[1], str1?[0], int.Parse(str1[3]), int.Parse(str1[4]), int.Parse(str1[2]));
                 lst.Add(marks);
                 lst2.Add(marks);
             }
@@ -548,6 +569,7 @@ namespace Yields
 
         private static void Stepik2()
         {
+#pragma warning disable CA1416 // Проверка совместимости платформы
             ManagementObjectSearcher? searcher8 =
                 new ManagementObjectSearcher("root\\CIMV2",
                 "SELECT * FROM Win32_Processor");
@@ -556,9 +578,10 @@ namespace Yields
             {
                 Console.WriteLine("------------- Win32_Processor instance ---------------");
                 Console.WriteLine("Name: {0}", queryObj["Name"]);
-                Console.WriteLine("NumberOfCores: {0}", queryObj["NumberOfCores"]);
-                Console.WriteLine("ProcessorId: {0}", queryObj["ProcessorId"]);
+                Console.WriteLine("NumberOfCores: {0}", queryObj?["NumberOfCores"]);
+                Console.WriteLine("ProcessorId: {0}", queryObj?["ProcessorId"]);
             }
+#pragma warning restore CA1416 // Проверка совместимости платформы
         }
 
 
@@ -648,7 +671,7 @@ namespace Yields
                 {
                     string? line = sr.ReadLine();
 
-                    foreach (var ch in line)
+                    foreach (char? ch in line)
                     {
                         if (ch == '0')
                         {
@@ -712,7 +735,7 @@ namespace Yields
                 {
                     using (var command = new FbCommand("select rp.id, rp.id_regpat, rp.dt_begin, rp.dt_end, rp.date_group, cast(rp.diagnoz as varchar(250) character set win1251), rp.daig_group, rp.serv_cod, rp.serv_count, rp.classcod, rp.num from regester_positions rp", connection, transaction))
                     {
-                        using (var reader = command.ExecuteReader())
+                        using (FbDataReader? reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -721,7 +744,7 @@ namespace Yields
                                 {
                                     //var values = new object[reader.FieldCount];
                                     //reader.GetValues(values);
-                                    qq.Id = long.Parse(reader.GetValue(0)?.ToString() ?? "0");
+                                    qq.Id = long.Parse(reader?.GetValue(0)?.ToString() ?? "0");
                                     qq.IdRegPat = long.Parse(reader?.GetValue(1)?.ToString() ?? "0");
                                     if (qq.IdRegPat == 515457024)
                                     {
@@ -761,7 +784,6 @@ namespace Yields
             RowCount = a;
             ColumnCount = b;
             matrix = new T[a, b];
-
         }
 
         public void GetMatrix()

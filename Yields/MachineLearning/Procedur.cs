@@ -19,9 +19,9 @@ namespace Yields.MachineLearning
     }
     class Procedure
     {
-        private string handlingText;
-        private ProcedureTypes ProcedureType { get; set; }
-        public Procedure(string textForHandle)
+        private string? handlingText;
+        private ProcedureTypes? ProcedureType { get; set; }
+        public Procedure(string? textForHandle)
         {
             handle(textForHandle);
         }
@@ -38,7 +38,7 @@ namespace Yields.MachineLearning
                         ***
                     */
                     Class1.AnswerEvent?.Invoke("Скажите какую процедуру вы хотите сделать: Поставить капельницу, сделать укол");
-                    string handlingStrBloodType = Class1.QuestionEvent?.Invoke();
+                    string? handlingStrBloodType = Class1.QuestionEvent?.Invoke();
                     handle(handlingStrBloodType);
                 }
                 else
@@ -52,7 +52,7 @@ namespace Yields.MachineLearning
             return true;
         }
 
-        private void handle(string textForHandle)
+        private void handle(string? textForHandle)
         {
             handlingText = textForHandle.DelProbels() + ' ';
             string[] handlingTextArr = handlingText.Split(' ');

@@ -8,6 +8,6 @@ namespace Yields.MachineLearning
 {
     public class Patient
     {
-        public string Fio { get; set; }
+        public string? Fio { get; set; }
     }
 }

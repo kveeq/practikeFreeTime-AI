@@ -9,9 +9,9 @@ namespace Yields.MachineLearning
     public class Uzi
     {
         private UziTypes UziType { get; set; } = UziTypes.Null;
-        private string handlingText;
+        private string ?handlingText;
 
-        public Uzi(string hundleStr)
+        public Uzi(string? hundleStr)
         {
             this.handlingText = hundleStr;
             handle(hundleStr);
@@ -29,7 +29,7 @@ namespace Yields.MachineLearning
                         ***
                     */
                     Class1.AnswerEvent?.Invoke("Скажите какой тип УЗИ вы хотите сделать: Брюшной полости, почек");
-                    string handlingStrBloodType = Class1.QuestionEvent?.Invoke();
+                    string? handlingStrBloodType = Class1.QuestionEvent?.Invoke();
                     handle(handlingStrBloodType);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Yields.MachineLearning
             return true;
         }
 
-        private void handle(string textForHandle)
+        private void handle(string? textForHandle)
         {
             handlingText = textForHandle.DelProbels() + ' ';
             string[] handlingTextArr = handlingText.Split(' ');

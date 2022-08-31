@@ -8,14 +8,14 @@ namespace Yields.MachineLearning
 {
     public class Analiz
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public AnalizTypes AnalizType { get; set; }
-        public Patient Recivier { get; set; }
-        private string handlingText;
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public AnalizTypes? AnalizType { get; set; }
+        public Patient? Recivier { get; set; }
+        private string? handlingText;
 
 
-        public Analiz(string textForHandle)
+        public Analiz(string? textForHandle)
         {
             handle(textForHandle);
         }
@@ -32,7 +32,7 @@ namespace Yields.MachineLearning
                         ***
                     */
                     Class1.AnswerEvent?.Invoke("Скажите какой анализ хотите сдать: крови, UR");
-                    string handlingStrBloodType = Class1.QuestionEvent?.Invoke();
+                    string? handlingStrBloodType = Class1.QuestionEvent?.Invoke();
                     handle(handlingStrBloodType);
                 }
                 else
@@ -57,7 +57,7 @@ namespace Yields.MachineLearning
                         ***
                     */
                     Class1.AnswerEvent?.Invoke("Скажите свое ФИО");
-                    string handlingStrPatFio = Class1.QuestionEvent?.Invoke();
+                    string? handlingStrPatFio = Class1.QuestionEvent?.Invoke();
                     if (handlingStrPatFio != "")
                     {
                         Recivier = new Patient();
@@ -76,7 +76,7 @@ namespace Yields.MachineLearning
         }
 
         // сделать так же как в классе анализа крови
-        private void handle(string textForHandle)
+        private void handle(string? textForHandle)
         {
             handlingText = textForHandle.DelProbels() + ' ';
             string[] handlingTextArr = handlingText.Split(' ');

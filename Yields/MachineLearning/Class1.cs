@@ -8,8 +8,8 @@ namespace Yields.MachineLearning
 {
     public class Class1
     {
-        internal static Action<string> AnswerEvent;
-        internal static Func<string> QuestionEvent;
+        public static Action<string?>? AnswerEvent;
+        public static Func<string?>? QuestionEvent;
         public string? Text { get; set; }
         private readonly bool isSdat = false;
         private readonly bool isAnaliz = false;
@@ -22,7 +22,7 @@ namespace Yields.MachineLearning
         private readonly bool isUzi = false;
         private readonly bool isUndefined = false;
 
-        public Class1(string text)
+        public Class1(string? text)
         {
             if (String.IsNullOrEmpty(text) || String.IsNullOrWhiteSpace(text))
             {
@@ -111,14 +111,14 @@ namespace Yields.MachineLearning
 
             if (isZakl)
             {
-                Lazy<Doctor> doctor = null;
+                Lazy<Doctor>? doctor = null;
                 string povt = "";
                 while (doctor == null)
                 {
                     AnswerEvent?.Invoke("К какому доктору?... " + povt);
-                    string problemStr = Console.ReadLine();
-                    string[] problemStrArr = problemStr?.Split(' ');
-                    foreach (var item in problemStrArr)
+                    string? problemStr = Console.ReadLine();
+                    string[]? problemStrArr = problemStr?.Split(' ');
+                    foreach (string? item in problemStrArr)
                     {
                         if (item.Trim().ToLower().Contains("терапевт"))
                         {
@@ -145,13 +145,13 @@ namespace Yields.MachineLearning
 
             if (isTest)
             {
-                Test test = new Test(Text);
+                Test test = new(Text);
                 test.handle();
             }
 
             if(isUzi)
             {
-                Uzi uzi = new Uzi(Text);
+                Uzi uzi = new(Text);
                 uzi.hundle();
             }
 
@@ -162,7 +162,7 @@ namespace Yields.MachineLearning
 
             if(isProcedures)
             {
-                Procedure proc = new Procedure(Text);
+                Procedure proc = new(Text);
                 proc.HandleText();
             }
 
@@ -171,14 +171,14 @@ namespace Yields.MachineLearning
 
         private void IsKonsultDoctorHandle()
         {
-            Lazy<Doctor> doctor = null;
+            Lazy<Doctor>? doctor = null;
             string povt = "";
             while (doctor == null)
             {
                 AnswerEvent?.Invoke("какая у вас проблема?... " + povt);
-                string problemStr = Console.ReadLine();
-                string[] problemStrArr = problemStr?.Split(' ');
-                foreach (var item in problemStrArr)
+                string? problemStr = Console.ReadLine();
+                string[]? problemStrArr = problemStr?.Split(' ');
+                foreach (string? item in problemStrArr)
                 {
                     if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот") || item.Trim().ToLower().Contains("терапевт"))
                     {

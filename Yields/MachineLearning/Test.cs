@@ -8,9 +8,9 @@ namespace Yields.MachineLearning
 {
     public class Test
     {
-        private TestTypes TestType { get; set; } = TestTypes.Null;
-        private string handlingText;
-        public Test(string Text)
+        private TestTypes? TestType { get; set; } = TestTypes.Null;
+        private string? handlingText;
+        public Test(string? Text)
         {
             handlingText = Text;
             handle(Text);
@@ -27,7 +27,7 @@ namespace Yields.MachineLearning
                         ***
                     */
                     Class1.AnswerEvent?.Invoke("Скажите какой тест хотите сдать");
-                    string handlingStrBloodType = Class1.QuestionEvent?.Invoke();
+                    string? handlingStrBloodType = Class1.QuestionEvent?.Invoke();
                     handle(handlingStrBloodType);
                 }
                 else
@@ -41,7 +41,7 @@ namespace Yields.MachineLearning
             return true;
         }
 
-        private void handle(string textForHandle)
+        private void handle(string? textForHandle)
         {
             handlingText = textForHandle.DelProbels() + ' ';
             string[] handlingTextArr = handlingText.Split(' ');

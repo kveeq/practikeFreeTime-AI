@@ -29,7 +29,7 @@ namespace Yields
             throw new NotImplementedException();
         }
 
-        public int Compare(object x, object y)
+        public int Compare(object? x, object? y)
         {
             throw new NotImplementedException();
         }
