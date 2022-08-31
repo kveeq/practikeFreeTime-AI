@@ -34,14 +34,17 @@ namespace Yields.Werner
         void Shvartovat();
     }
 
-    public interface IHumanable : IMoveable
+    public interface IHumanable: IMoveable
     {
         public event Action<string> HumanDead;
         event Action<string> HpChange;
+        event Action<string> WeaponChange;
+        public dynamic? Weapon { get; }
         int Hp { get; set; }
         void Eat(Food food);
         void Living();
         void Hit(IHumanable human2);
-        void Hit(IHumanable human2, Weapon weapon);
+        void PullWeapon<T>(T weapon) where T : Weapon<T>;
+        void ThrowWeapon();
     }
 }

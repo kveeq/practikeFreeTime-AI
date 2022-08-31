@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yields.Werner
 {
-    public abstract class Weapon : IWeapon
+    public abstract class Weapon<T> : IWeapon where T : Weapon<T>
     {
         public int Damage { get; }
         public Weapon(int damage)
@@ -15,11 +15,11 @@ namespace Yields.Werner
         }
         public void Hit(IHumanable human, IHumanable humanSet)
         {
-            throw new NotImplementedException();
+            human.Hit(humanSet);
         }
     }
 
-    public class Kinjal : Weapon, IKidak
+    public class Kinjal : Weapon<Kinjal>, IKidak
     {
         public Kinjal(int damage) : base(damage)
         {
@@ -31,7 +31,7 @@ namespace Yields.Werner
         }
     }
 
-    public class Step : Weapon, IStrel
+    public class Step : Weapon<Step>, IStrel
     {
         public Step(int damage) : base(damage)
         {

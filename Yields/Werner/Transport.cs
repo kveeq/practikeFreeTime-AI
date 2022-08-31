@@ -66,6 +66,9 @@ namespace Yields.Werner
     {
         private int hp = 100;
         private bool isDead = false;
+        private dynamic weapon = null;
+        public dynamic? Weapon { get => weapon; }
+
         public int Hp { 
             get => hp; 
             set  
@@ -77,6 +80,7 @@ namespace Yields.Werner
                     isDead = true;
                     return;
                 }
+
                 HpChange?.Invoke($"Здоровье изменилось - {Hp}"); 
             }
         }
@@ -85,6 +89,7 @@ namespace Yields.Werner
 
         public event Action<string>? HpChange;
         public event Action<string>? HumanDead;
+        public event Action<string>? WeaponChange;
 
         public void Eat(Food food)
         {
@@ -104,6 +109,7 @@ namespace Yields.Werner
                 Console.WriteLine("human dead");
                 return;
             }
+
             Console.WriteLine($"{this.GetType().Name} Jumping");
         }
 
@@ -124,19 +130,20 @@ namespace Yields.Werner
                 Console.WriteLine("human dead");
                 return;
             }
+            Console.Write("Hit ");
             human2.Hp -= damage;
         }     
         
-         public void Hit(IHumanable human2, Weapon weapon)
-        {
-            if (isDead)
-            {
-                Console.WriteLine("human dead");
-                return;
-            }
-            weapon.Hit(this, human2);
-            //human2.Hp -= weapon.Damage;
-        }
+        // public void Hit(IHumanable human2, Weapon weapon)
+        //{
+        //    //if (isDead)
+        //    //{
+        //    //    Console.WriteLine("human dead");
+        //    //    return;
+        //    //}
+        //    //weapon.Hit(this, human2);
+        //    //human2.Hp -= weapon.Damage;
+        //}
 
         public void Move()
         {
@@ -146,6 +153,23 @@ namespace Yields.Werner
         public void Run()
         {
             Console.WriteLine($"{this.GetType().Name} Running");
+        }
+
+        public void PullWeapon<T>(T pullWeapon) where T : Weapon<T>
+        {
+            damage += pullWeapon.Damage;
+            weapon = pullWeapon;
+            WeaponChange?.Invoke($"{weapon.GetType().Name} взял");
+        }
+
+        public void ThrowWeapon()
+        {
+            if (weapon == null)
+                return;
+
+            WeaponChange?.Invoke($"{weapon.GetType().Name} выбросил");
+            damage -= weapon.Damage;
+            weapon = null;
         }
     }
 
@@ -166,7 +190,7 @@ namespace Yields.Werner
     {
         public void Shvartovat()
         {
-            Console.WriteLine($"{this.GetType().Name} Svarting");
+            Console.WriteLine($"{this.GetType().Name} Shvarting");
         }
 
         public void Swim()

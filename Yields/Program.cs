@@ -6,6 +6,8 @@ using FirebirdSql.Data.FirebirdClient;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using System.Numerics;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace Yields
 {
@@ -46,17 +48,49 @@ namespace Yields
 
     public class Program
     {
-        public static void Main()
+        public static async Task Main()
         {
-            //while (true)
+            // while (true)
             //    Console.WriteLine($"{Console.ReadLine().Length}\n");
 
-            //Stepen();
+            // Stepen();
 
-            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            var handle = new MachineLearning.Class1(Console.ReadLine());
-            handle.Handling();
+            // MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            // MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            // var handle = new MachineLearning.Class1(Console.ReadLine());
+            // handle.Handling();
+
+            //IHumanable human = new Human();
+            //human.WeaponChange += (mes) => Console.WriteLine(mes);
+            //human.HpChange += (mes) => Console.WriteLine(mes);
+            //IHumanable human1 = new Human();
+            //human1.HpChange += (mes) => Console.WriteLine(mes);
+            ////human.Eat(new Orange(20));
+            //human.Hit(human1);
+            //var weapon = new Kinjal(20);
+            //human.PullWeapon<Kinjal>(weapon);
+            //human.Weapon?.Kinut(human, human1);
+            //human1.PullWeapon(weapon);
+            //human1.Hit(human);
+            ////human.Hit(human1);
+            //human.ThrowWeapon();
+            //human.Hit(human1);
+
+
+            WebProxy myProxy = new WebProxy("proxy.akbarsmed.ru", 8080);
+            myProxy.BypassProxyOnLocal = false;
+            HttpClient.DefaultProxy = myProxy;
+
+            var url = $"https://api.openweathermap.org/data/2.5/weather?q=Kazan&units=metric&appid=fa88c9cdfdb5bff9bc0b42893067a148&lang=ru";
+            HttpClient client = new HttpClient();
+            var a = await client.GetStringAsync(url);
+            var translatedText = JsonConvert.DeserializeObject<Rootobject>(a);
+            Console.WriteLine(translatedText?.main.temp + " C ");
+
+            var aa = client.Send(new HttpRequestMessage(HttpMethod.Post, url));
+            var dd = await aa.Content.ReadAsStringAsync();
+
+            Console.WriteLine(JsonConvert.DeserializeObject<Rootobject>(dd).main.temp);
 
             //ITransport transport = new Car();
             //transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
@@ -373,6 +407,7 @@ namespace Yields
                     }
                 }
             }
+
             wf<PersonalDela> amgt = new wf<PersonalDela>();
             //amgt.Sort(amgt[], n);
 
@@ -385,6 +420,17 @@ namespace Yields
             Console.WriteLine($"{Math.Sign(0)}");
             Console.WriteLine($"{Math.Sign(-2)}");
 
+            if(Math.Sign(0) == -1)
+            {
+                for(int i = 0; i < n; i++)
+                {
+                    for(int j = 0; j < n-1; j++)
+                    {
+                        (mark[i], mark[j]) = (mark[j], mark[i]);
+                        Console.WriteLine(mark[j].ToString());
+                    }
+                }
+            }
         }
 
         public class wf<T> : IComparable

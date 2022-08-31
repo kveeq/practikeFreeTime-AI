@@ -19,8 +19,8 @@ namespace Yields.Werner
             Description = description;
         }
 
-        public abstract string Name { get; set; }
-        public abstract string Description { get; set; }
+        public abstract string? Name { get; set; }
+        public abstract string? Description { get; set; }
         public abstract int HpPlus { get; set; }
 
         public void Eat(IHumanable transport)
@@ -29,6 +29,7 @@ namespace Yields.Werner
             Console.WriteLine($"{transport.GetType().Name} eat {this.GetType().Name}");
         }
     }
+
     public abstract class Toplivo : IToplivo
     {
         protected Toplivo(int hpPlus)
@@ -76,8 +77,8 @@ namespace Yields.Werner
         {
         }
 
-        public override string Name { get; set; }
-        public override string Description { get; set; }
+        public override string? Name { get; set; }
+        public override string? Description { get; set; }
         public override int HpPlus { get; set; }
     }
 
@@ -92,8 +93,8 @@ namespace Yields.Werner
         {
         }
 
-        public override string Name { get; set; }
-        public override string Description { get; set; }
+        public override string? Name { get; set; }
+        public override string? Description { get; set; }
         public override int HpPlus { get; set; }
     }
 }

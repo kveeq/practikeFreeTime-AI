@@ -118,8 +118,9 @@ namespace Yields.MachineLearning
                     AnswerEvent?.Invoke("К какому доктору?... " + povt);
                     string? problemStr = Console.ReadLine();
                     string[]? problemStrArr = problemStr?.Split(' ');
-                    foreach (string? item in problemStrArr)
+                    for (int i = 0; i < problemStrArr?.Length; i++)
                     {
+                        string? item = problemStrArr[i];
                         if (item.Trim().ToLower().Contains("терапевт"))
                         {
                             doctor = new(new Doctor(isKonsult, DoctorSpec.Terapevt));
