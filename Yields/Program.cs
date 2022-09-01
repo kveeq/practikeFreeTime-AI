@@ -1,4 +1,5 @@
-﻿using Yields.Werner;
+﻿#define MYTEST
+using Yields.Werner;
 using System.Management;
 using Yields.indexators;
 using Yields.MachineLearning;
@@ -55,10 +56,10 @@ namespace Yields
 
             // Stepen();
 
-            // MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            // MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            // var handle = new MachineLearning.Class1(Console.ReadLine());
-            // handle.Handling();
+            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            var handle = new MachineLearning.Class1(Console.ReadLine());
+            handle.Handling();
 
             //IHumanable human = new Human();
             //human.WeaponChange += (mes) => Console.WriteLine(mes);
@@ -76,12 +77,22 @@ namespace Yields
             //human.ThrowWeapon();
             //human.Hit(human1);
 
+#if RELEASE
+    Console.WriteLine("RELEASE"); 
+#elif DEBUG
+            Console.WriteLine("DEBUG");
+#endif
 
             WebProxy myProxy = new WebProxy("proxy.akbarsmed.ru", 8080);
             myProxy.BypassProxyOnLocal = false;
             HttpClient.DefaultProxy = myProxy;
+            string ab = "1";
+            string ba = "2";
 
             var url = $"https://api.openweathermap.org/data/2.5/weather?q=Kazan&units=metric&appid=fa88c9cdfdb5bff9bc0b42893067a148&lang=ru";
+            Console.WriteLine(ab + " " + ba);
+            (ab, ba) = (ba, ab);
+            Console.WriteLine(ab + " " + ba);
             HttpClient client = new HttpClient();
             var a = await client.GetStringAsync(url);
             var translatedText = JsonConvert.DeserializeObject<Rootobject>(a);
@@ -90,7 +101,13 @@ namespace Yields
             var aa = client.Send(new HttpRequestMessage(HttpMethod.Post, url));
             var dd = await aa.Content.ReadAsStringAsync();
 
-            Console.WriteLine(JsonConvert.DeserializeObject<Rootobject>(dd).main.temp);
+            Console.WriteLine(JsonConvert.DeserializeObject<Rootobject>(dd)?.main.temp);
+            HttpClient newClient = new HttpClient();
+            #region // rubbish
+            Console.WriteLine("");
+            HttpContent content = aa.Content;
+            ContextCallback contextCallback = new ContextCallback((a) => { });
+            #endregion
 
             //ITransport transport = new Car();
             //transport.ToplivoChanged += (mess) => Console.WriteLine(mess);
@@ -355,6 +372,7 @@ namespace Yields
                     template = (Convert.ToInt64(template[i]) * 2).ToString();
                 }
             }
+
             Console.WriteLine(template);
         }
 
