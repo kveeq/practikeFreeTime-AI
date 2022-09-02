@@ -32,7 +32,7 @@ namespace Yields.MachineLearning
 
             Text = text?.DelProbels();
             Text = Text?.Replace(",", "");
-            string[]? str = Text?.Split(' ');
+            string[] str = Text?.Split(' ') ?? new string[1] {"111"};
             foreach (string? item in str)
             {
                 if (item.Trim().ToLower() == "сдать")
@@ -178,7 +178,7 @@ namespace Yields.MachineLearning
             {
                 AnswerEvent?.Invoke("какая у вас проблема?... " + povt);
                 string? problemStr = Console.ReadLine();
-                string[]? problemStrArr = problemStr?.Split(' ');
+                string[] problemStrArr = problemStr?.Split(' ') ?? new string[0];
                 foreach (string? item in problemStrArr)
                 {
                     if (item.Trim().ToLower() == "живот" || item.Trim().ToLower().Contains("живот") || item.Trim().ToLower().Contains("терапевт"))

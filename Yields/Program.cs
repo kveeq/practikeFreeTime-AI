@@ -83,40 +83,65 @@ namespace Yields
             //handle.Handling();
 
             IHumanable human = new Human("Human1");
-            Console.WriteLine($"Здоровье Human1 = {human.Hp}");
             human.WeaponChange += (mes) => Console.WriteLine(mes);
             human.HpChange += (mes) => Console.WriteLine(mes);
+            human.HumanDead += (mes) => Console.WriteLine(mes);
+
             IHumanable human1 = new Human("Human2");
-            Console.WriteLine($"Здоровье Human2 = {human1.Hp}");
             human1.HpChange += (mes) => Console.WriteLine(mes);
             human1.WeaponChange += (mes) => Console.WriteLine(mes);
-            //human.Eat(new Orange(20));
-            human.Hit(human1);
+            human1.HumanDead += (mes) => Console.WriteLine(mes);
+
+            Console.WriteLine($"Здоровье Human1 = {human.Hp}");
+            Console.WriteLine($"Здоровье Human2 = {human1.Hp}");
             var weapon = new Kinjal(20);
-            human.PullWeapon<Kinjal>(weapon);
-            human.Weapon?.Kinut(human, human1);
-            human1.PullWeapon(weapon);
-            human1.Hit(human);
-            //human.Hit(human1);
-            human.ThrowWeapon();
-            human.Hit(human1);
-            Dubin dubin = new Dubin(5);
-            human.PullWeapon(dubin);
+
+            while (true)
+            {
+                var key = Console.ReadKey().Key;
+                if (key == ConsoleKey.Escape)
+                    break;
+                else if(key == ConsoleKey.G)
+                {
+                    human.ThrowWeapon();
+                }
+                else if(key == ConsoleKey.E)
+                {
+                    human.PullWeapon<Kinjal>(weapon);
+                }
+                else if(key == ConsoleKey.R)
+                {
+                    human.Hit(human1);
+                }
+                else if(key == ConsoleKey.Q)
+                {
+                    human1.Eat(new Orange(20));
+                    Thread.Sleep(3000);
+                }
+                //human.Weapon?.Kinut(human, human1);
+                //human1.PullWeapon(weapon);
+                //human1.Hit(human);
+                ////human.Hit(human1);
+                //human.Hit(human1);
+                //Dubin dubin = new Dubin(5);
+                //human.PullWeapon(dubin);
+            }
 
             Console.WriteLine($"Здоровье Human1 = {human.Hp}");
             Console.WriteLine($"Здоровье Human2 = {human1.Hp}");
 
-#if RELEASE
-    Console.WriteLine("RELEASE"); 
-#elif DEBUG
-            Console.WriteLine("DEBUG");
-#endif
-
+            #if RELEASE
+                Console.WriteLine("RELEASE"); 
+            #elif DEBUG
+                Console.WriteLine("DEBUG");
+            #endif
+ 
             WebProxy myProxy = new WebProxy("proxy.akbarsmed.ru", 8080);
             myProxy.BypassProxyOnLocal = false;
             HttpClient.DefaultProxy = myProxy;
             string ab = "1";
             string ba = "2";
+            Weather? weather = new Weather();
 
             var url = $"https://api.openweathermap.org/data/2.5/weather?q=Kazan&units=metric&appid=fa88c9cdfdb5bff9bc0b42893067a148&lang=ru";
             Console.WriteLine(ab + " " + ba);
@@ -125,12 +150,13 @@ namespace Yields
             HttpClient client = new HttpClient();
             var a = await client.GetStringAsync(url);
             var translatedText = JsonConvert.DeserializeObject<Rootobject>(a);
-            Console.WriteLine(translatedText?.main.temp + " C ");
+            Console.WriteLine(translatedText?.Main?.temp + " C ");
+            weather = translatedText?.Weather?[0];
 
             var aa = client.Send(new HttpRequestMessage(HttpMethod.Post, url));
             var dd = await aa.Content.ReadAsStringAsync();
 
-            Console.WriteLine(JsonConvert.DeserializeObject<Rootobject>(dd)?.main.temp);
+            Console.WriteLine(JsonConvert.DeserializeObject<Rootobject>(dd)?.Main?.temp);
             HttpClient newClient = new HttpClient();
             #region // rubbish
             Console.WriteLine("");
@@ -438,7 +464,8 @@ namespace Yields
             System.Collections.IEnumerator afr = mark.GetEnumerator();
             while(true)
             {
-                if (!afr.MoveNext())
+                var d = afr;
+                if (!d.MoveNext())
                     break;
                 Console.WriteLine(afr?.Current);
             }

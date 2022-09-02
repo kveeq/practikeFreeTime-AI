@@ -65,7 +65,7 @@ namespace Yields.Werner
     public class Human : IHumanable
     {
         private int hp = 100;
-        private bool isDead = false;
+        public bool isDead { get; set; } = false;
         private dynamic? weapon = null;
         public dynamic? Weapon { get => weapon; }
         public string Name { get; set; }
@@ -79,16 +79,15 @@ namespace Yields.Werner
             set  
             {
                 hp = value;
-                if (value < 0)
-                {
-                    HumanDead?.Invoke($"human dead");
-                    isDead = true;
-                    return;
-                }
-
                 HpChange?.Invoke($"Здоровье {Name} изменилось - {Hp}"); 
+                if (value <= 0)
+                {
+                    HumanDead?.Invoke($"human {Name} dead");
+                    isDead = true;
+                }
             }
         }
+
 
         public int damage = 10;
 
@@ -103,6 +102,7 @@ namespace Yields.Werner
                 Console.WriteLine("human dead");
                 return;
             }
+
             food.Eat(this);
             Console.WriteLine($"{this.GetType().Name} Eating");
         }
@@ -130,9 +130,9 @@ namespace Yields.Werner
 
         public void Hit(IHumanable human2)
         {
-            if (isDead)
+            if (human2.isDead)
             {
-                Console.WriteLine("human dead");
+                Console.WriteLine($"human {Name} dead");
                 return;
             }
             Console.Write("Hit ");
@@ -162,6 +162,8 @@ namespace Yields.Werner
 
         public void PullWeapon<T>(T pullWeapon) where T : Weapon<T>
         {
+            if (weapon != null)
+                return;
             damage += pullWeapon.Damage;
             weapon = pullWeapon;
             WeaponChange?.Invoke($"{Name} взял {weapon.GetType().Name}");
