@@ -89,10 +89,11 @@ namespace Yields
             //var handle = new MachineLearning.Class1(Console.ReadLine());
             //handle.Handling();
 
-            IHumanable human = new Human("Human1");
             Human.WeaponChange += (mes) => Console.WriteLine(mes);
             Human.HpChange += (mes) => Console.WriteLine(mes);
             Human.HumanDead += (mes) => Console.WriteLine(mes);
+
+            IHumanable human = new Human("Human1");
 
             IHumanable human1 = new Human("Human2");
 
@@ -146,6 +147,7 @@ namespace Yields
             myProxy.BypassProxyOnLocal = false;
             HttpClient.DefaultProxy = myProxy;
             HttpListener listener = new HttpListener();
+            var uri = new Uri("");
             listener.Prefixes.Add("https://");
             listener.Prefixes.Add("api.openweathermap.org/data/2.5/weather?q=Kazan&units=metric&appid=fa88c9cdfdb5bff9bc0b42893067a148&lang=ru");
             //listener.Prefixes.Add("");

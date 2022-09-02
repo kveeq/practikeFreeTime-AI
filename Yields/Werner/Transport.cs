@@ -65,10 +65,10 @@ namespace Yields.Werner
     public class Human : IHumanable
     {
         private int hp = 100;
-        public bool isDead { get; set; } = false;
+        public bool isDead { get; private set; } = false;
         private dynamic? weapon = null;
         public dynamic? Weapon { get => weapon; }
-        public string Name { get; set; }
+        public string Name { get; private set; }
         public Human(string name)
         {
             Name = name;
