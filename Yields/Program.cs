@@ -51,12 +51,16 @@ namespace Yields
     {
         private static async Task Random(int a)
         {
-            await Task.Run(() => Console.WriteLine(a));
+           Task.Run(() => Console.WriteLine(a));
         }
 
-        private static async Task Th()
+        private static Task Th()
         {
-           await Task.Run(() => Thread.Sleep(3000));
+            object locker = new object();
+            lock (locker)
+            {
+                return Task.Run(() => Thread.Sleep(1000));
+            };
         }
 
         public static async Task Main()
@@ -64,6 +68,8 @@ namespace Yields
             await Random(2);
             await Random(50);
             await Th();
+            await Random(50);
+            await Random(2);
 
 
             // while (true)
