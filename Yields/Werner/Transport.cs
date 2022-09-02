@@ -91,9 +91,9 @@ namespace Yields.Werner
 
         public int damage = 10;
 
-        public event Action<string>? HpChange;
-        public event Action<string>? HumanDead;
-        public event Action<string>? WeaponChange;
+        public static event Action<string>? HpChange;
+        public static event Action<string>? HumanDead;
+        public static event Action<string>? WeaponChange;
 
         public void Eat(Food food)
         {
@@ -123,7 +123,7 @@ namespace Yields.Werner
                 return;
             Console.Write("Hit ");
             human2.Hp -= damage;
-        }     
+        }
 
         private bool CheckDead(IHumanable human)
         {

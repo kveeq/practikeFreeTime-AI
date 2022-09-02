@@ -36,9 +36,9 @@ namespace Yields.Werner
 
     public interface IHumanable: IMoveable
     {
-        public event Action<string> HumanDead;
-        event Action<string> HpChange;
-        event Action<string> WeaponChange;
+        public static event Action<string> HumanDead;
+        static event Action<string> HpChange;
+        static event Action<string> WeaponChange;
         public bool isDead { get; }
         public string Name { get; }
         public dynamic? Weapon { get; }
