@@ -49,17 +49,32 @@ namespace Yields
 
     public class Program
     {
+        private static async Task Random(int a)
+        {
+            await Task.Run(() => Console.WriteLine(a));
+        }
+
+        private static async Task Th()
+        {
+           await Task.Run(() => Thread.Sleep(3000));
+        }
+
         public static async Task Main()
         {
+            await Random(2);
+            await Random(50);
+            await Th();
+
+
             // while (true)
             //    Console.WriteLine($"{Console.ReadLine().Length}\n");
 
             // Stepen();
 
-            MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
-            MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
-            var handle = new MachineLearning.Class1(Console.ReadLine());
-            handle.Handling();
+            //MachineLearning.Class1.QuestionEvent = () => Console.ReadLine(); // передавать метод для возврата ответа к вопросу ассистента (return текст из распознанного текста)
+            //MachineLearning.Class1.AnswerEvent = (mess) => Console.WriteLine(mess); // передавать метод для отображения ответа ассистента (голосовой ответ)
+            //var handle = new MachineLearning.Class1(Console.ReadLine());
+            //handle.Handling();
 
             //IHumanable human = new Human();
             //human.WeaponChange += (mes) => Console.WriteLine(mes);
@@ -803,7 +818,7 @@ namespace Yields
                         {
                             while (reader.Read())
                             {
-                                CatModel? qq = new CatModel();
+                                CatModel qq = new CatModel();
                                 try
                                 {
                                     //var values = new object[reader.FieldCount];
@@ -816,7 +831,7 @@ namespace Yields
                                     }
                                     qq.DtBegin = reader?.GetValue(2)?.ToString();
                                     qq.DtEnd = reader?.GetValue(3)?.ToString();
-                                    qq.DateGroup = long.Parse(reader?.GetString(4) ?? "0");
+                                    qq.DateGroup = long.Parse(reader?.GetValue(4)?.ToString() ?? "0");
                                     qq.Diagnoz = reader?.GetValue(5)?.ToString();
                                     qq.DiagGroup = long.Parse(reader?.GetValue(6)?.ToString() ?? "0");
                                     qq.ServCod = long.Parse(reader?.GetValue(7)?.ToString() ?? "0");
@@ -826,7 +841,7 @@ namespace Yields
                                 }
                                 catch (Exception ex)
                                 {
-                                    throw new Exception(ex.Message);
+                                    //throw new Exception(ex.Message);
                                     //Events.Message?.Invoke($"RegesterPositions) {ex.Message} {qq.Id} {qq.IdRegPat} {qq.DateGroup} {qq.DiagGroup} {qq.ServCod} {qq.ServCount} {qq.ClassCod} {qq.Num}");
                                 }
                                 yield return qq;
