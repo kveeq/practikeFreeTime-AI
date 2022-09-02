@@ -40,6 +40,7 @@ namespace Yields.Werner
         event Action<string> HpChange;
         event Action<string> WeaponChange;
         public bool isDead { get; }
+        public string Name { get; }
         public dynamic? Weapon { get; }
         int Hp { get; set; }
         void Eat(Food food);

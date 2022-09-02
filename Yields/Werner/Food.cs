@@ -26,7 +26,7 @@ namespace Yields.Werner
         public void Eat(IHumanable transport)
         {
             transport.Hp += HpPlus;
-            Console.WriteLine($"{transport.GetType().Name} eat {this.GetType().Name}");
+            Console.WriteLine($"{transport.GetType().Name} {transport.Name} eat {this.GetType().Name}");
         }
     }
 

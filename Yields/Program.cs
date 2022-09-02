@@ -51,7 +51,7 @@ namespace Yields
     {
         private static async Task Random(int a) // асинхронно
         {
-           await  Task.Run(() => Console.WriteLine(a));
+            await Task.Run(() => Console.WriteLine(a));
         }
 
         private static Task Th() // не асинхронно
@@ -62,7 +62,14 @@ namespace Yields
                 return Task.Run(() => Thread.Sleep(1000));
             };
         }
-
+        public static void ClearCurrentConsoleLine()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            for (int i = 0; i < Console.WindowWidth; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(0, currentLineCursor);
+        }
         public static async Task Main()
         {
             //await Random(2);
@@ -99,6 +106,9 @@ namespace Yields
             while (true)
             {
                 var key = Console.ReadKey().Key;
+                Console.WriteLine("");
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                ClearCurrentConsoleLine();
                 if (key == ConsoleKey.Escape)
                     break;
                 else if(key == ConsoleKey.G)

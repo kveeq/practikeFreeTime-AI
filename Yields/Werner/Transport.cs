@@ -97,47 +97,43 @@ namespace Yields.Werner
 
         public void Eat(Food food)
         {
-            if (isDead)
-            {
-                Console.WriteLine("human dead");
+            if (CheckDead(this))
                 return;
-            }
-
             food.Eat(this);
-            Console.WriteLine($"{this.GetType().Name} Eating");
+            Console.WriteLine($"{this.GetType().Name} {Name} Eating");
         }
 
         public void Jump()
         {
-            if (isDead)
-            {
-                Console.WriteLine("human dead");
+            if (CheckDead(this))
                 return;
-            }
-
-            Console.WriteLine($"{this.GetType().Name} Jumping");
+            Console.WriteLine($"{this.GetType().Name} {Name} Jumping");
         }
 
         public void Living()
         {
-            if (isDead)
-            {
-                Console.WriteLine("human dead");
+            if (CheckDead(this))
                 return;
-            }
-            Console.WriteLine($"{this.GetType().Name} Living");
+            Console.WriteLine($"{this.GetType().Name} {Name} Living");
         }
 
         public void Hit(IHumanable human2)
         {
-            if (human2.isDead)
-            {
-                Console.WriteLine($"human {Name} dead");
+            if (CheckDead(human2) || CheckDead(this))
                 return;
-            }
             Console.Write("Hit ");
             human2.Hp -= damage;
         }     
+
+        private bool CheckDead(IHumanable human)
+        {
+            if (human.isDead)
+            {
+                Console.WriteLine($"human {human.Name} dead");
+            }
+            
+            return human.isDead;
+        }
         
         // public void Hit(IHumanable human2, Weapon weapon)
         //{
