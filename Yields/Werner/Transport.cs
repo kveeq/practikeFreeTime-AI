@@ -66,8 +66,13 @@ namespace Yields.Werner
     {
         private int hp = 100;
         private bool isDead = false;
-        private dynamic weapon = null;
+        private dynamic? weapon = null;
         public dynamic? Weapon { get => weapon; }
+        public string Name { get; set; }
+        public Human(string name)
+        {
+            Name = name;
+        }
 
         public int Hp { 
             get => hp; 
@@ -81,7 +86,7 @@ namespace Yields.Werner
                     return;
                 }
 
-                HpChange?.Invoke($"Здоровье изменилось - {Hp}"); 
+                HpChange?.Invoke($"Здоровье {Name} изменилось - {Hp}"); 
             }
         }
 
@@ -159,7 +164,7 @@ namespace Yields.Werner
         {
             damage += pullWeapon.Damage;
             weapon = pullWeapon;
-            WeaponChange?.Invoke($"{weapon.GetType().Name} взял");
+            WeaponChange?.Invoke($"{Name} взял {weapon.GetType().Name}");
         }
 
         public void ThrowWeapon()
@@ -167,7 +172,7 @@ namespace Yields.Werner
             if (weapon == null)
                 return;
 
-            WeaponChange?.Invoke($"{weapon.GetType().Name} выбросил");
+            WeaponChange?.Invoke($"{Name} выбросил {weapon.GetType().Name}");
             damage -= weapon.Damage;
             weapon = null;
         }

@@ -49,12 +49,12 @@ namespace Yields
 
     public class Program
     {
-        private static async Task Random(int a)
+        private static async Task Random(int a) // асинхронно
         {
-           Task.Run(() => Console.WriteLine(a));
+           await  Task.Run(() => Console.WriteLine(a));
         }
 
-        private static Task Th()
+        private static Task Th() // не асинхронно
         {
             object locker = new object();
             lock (locker)
@@ -65,11 +65,11 @@ namespace Yields
 
         public static async Task Main()
         {
-            await Random(2);
-            await Random(50);
-            await Th();
-            await Random(50);
-            await Random(2);
+            //await Random(2);
+            //await Random(50);
+            //await Th();
+            //await Random(50);
+            //await Random(2);
 
 
             // while (true)
@@ -82,21 +82,29 @@ namespace Yields
             //var handle = new MachineLearning.Class1(Console.ReadLine());
             //handle.Handling();
 
-            //IHumanable human = new Human();
-            //human.WeaponChange += (mes) => Console.WriteLine(mes);
-            //human.HpChange += (mes) => Console.WriteLine(mes);
-            //IHumanable human1 = new Human();
-            //human1.HpChange += (mes) => Console.WriteLine(mes);
-            ////human.Eat(new Orange(20));
+            IHumanable human = new Human("Human1");
+            Console.WriteLine($"Здоровье Human1 = {human.Hp}");
+            human.WeaponChange += (mes) => Console.WriteLine(mes);
+            human.HpChange += (mes) => Console.WriteLine(mes);
+            IHumanable human1 = new Human("Human2");
+            Console.WriteLine($"Здоровье Human2 = {human1.Hp}");
+            human1.HpChange += (mes) => Console.WriteLine(mes);
+            human1.WeaponChange += (mes) => Console.WriteLine(mes);
+            //human.Eat(new Orange(20));
+            human.Hit(human1);
+            var weapon = new Kinjal(20);
+            human.PullWeapon<Kinjal>(weapon);
+            human.Weapon?.Kinut(human, human1);
+            human1.PullWeapon(weapon);
+            human1.Hit(human);
             //human.Hit(human1);
-            //var weapon = new Kinjal(20);
-            //human.PullWeapon<Kinjal>(weapon);
-            //human.Weapon?.Kinut(human, human1);
-            //human1.PullWeapon(weapon);
-            //human1.Hit(human);
-            ////human.Hit(human1);
-            //human.ThrowWeapon();
-            //human.Hit(human1);
+            human.ThrowWeapon();
+            human.Hit(human1);
+            Dubin dubin = new Dubin(5);
+            human.PullWeapon(dubin);
+
+            Console.WriteLine($"Здоровье Human1 = {human.Hp}");
+            Console.WriteLine($"Здоровье Human2 = {human1.Hp}");
 
 #if RELEASE
     Console.WriteLine("RELEASE"); 
@@ -414,7 +422,7 @@ namespace Yields
             // 9B
             // 2032
             int n = Convert.ToInt32(Console.ReadLine());
-            PersonalDela[]? mark = new PersonalDela[n];
+            PersonalDela[] mark = new PersonalDela[n];
             for (int i = 0; i < n; i++)
             {
                 string?[]? str1 = new string[4];
@@ -423,10 +431,11 @@ namespace Yields
                     string? str = Console.ReadLine();
                     str1[j] = str?.Trim();
                 }
-                PersonalDela? marks = new(str1?[0], str1?[1], str1?[2], str1?[3]);
+
+                PersonalDela marks = new(str1?[0], str1?[1], str1?[2], str1?[3]);
                 mark[i] = marks;
             }
-            var afr = mark.GetEnumerator();
+            System.Collections.IEnumerator afr = mark.GetEnumerator();
             while(true)
             {
                 if (!afr.MoveNext())
@@ -717,7 +726,7 @@ namespace Yields
                 {
                     string? str1 = reader.ReadLine();
                     length += str1?.Length;
-                    foreach (var simvol in str1)
+                    foreach (char simvol in str1)
                     {
                         if (Char.IsDigit(simvol))
                             digitCount1++;
@@ -732,6 +741,7 @@ namespace Yields
 
                 Console.WriteLine($"\n\nDigit Count: {digitCount1}\nLetter Count: {letterCount1}\nSimvol Count: {simvolCount1}\nSpace count: {spaceCount1}\nAll count: {length}");
             }
+
             string? Name = "";
             using (FileStream? stream = new(@"C:\Users\intern\Desktop\rew1.txt", FileMode.OpenOrCreate)) Name = stream.Name;
 
@@ -845,7 +855,7 @@ namespace Yields
                                     qq.ClassCod = long.Parse(reader?.GetValue(9)?.ToString() ?? "0");
                                     qq.Num = long.Parse(reader?.GetValue(10)?.ToString() ?? "0");
                                 }
-                                catch (Exception ex)
+                                catch
                                 {
                                     //throw new Exception(ex.Message);
                                     //Events.Message?.Invoke($"RegesterPositions) {ex.Message} {qq.Id} {qq.IdRegPat} {qq.DateGroup} {qq.DiagGroup} {qq.ServCod} {qq.ServCount} {qq.ClassCod} {qq.Num}");
