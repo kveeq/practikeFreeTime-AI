@@ -133,7 +133,7 @@ namespace Yields
                 //human.PullWeapon(dubin);
             }
 
-            Console.WriteLine($"Здоровье Human1 = {human.Hp}");
+            Console.WriteLine($"rЗдоровье Human1 = {human.Hp}");
             Console.WriteLine($"Здоровье Human2 = {human1.Hp}");
 
             #if RELEASE
@@ -145,6 +145,14 @@ namespace Yields
             WebProxy myProxy = new WebProxy("proxy.akbarsmed.ru", 8080);
             myProxy.BypassProxyOnLocal = false;
             HttpClient.DefaultProxy = myProxy;
+            HttpListener listener = new HttpListener();
+            listener.Prefixes.Add("https://");
+            listener.Prefixes.Add("api.openweathermap.org/data/2.5/weather?q=Kazan&units=metric&appid=fa88c9cdfdb5bff9bc0b42893067a148&lang=ru");
+            //listener.Prefixes.Add("");
+            //listener.Prefixes.Add("");
+            //listener.Prefixes.Add("");
+            listener.Start();
+            var context = await listener.GetContextAsync();
             string ab = "1";
             string ba = "2";
             Weather? weather = new Weather();
