@@ -50,6 +50,12 @@ namespace Yields
 
     public class Program
     {
+        private static async void GetRandomValue()
+        {
+            Action action = () => Console.WriteLine("l");
+            await Task.Run(action);
+        }
+
         private static async Task Random(int a) // асинхронно
         {
             await Task.Run(() => Console.WriteLine(a));
@@ -74,6 +80,12 @@ namespace Yields
 
         public static async Task Main()
         {
+            var digit = int.Parse(Console.ReadLine());
+            var strRight = "Принадлежит";
+            var strFalse = "Не принадлежит";
+            Console.WriteLine((digit <= -3 || digit >= 7) ? strRight : strFalse);
+            return;
+
             //int abba = new A() + new A() + new A() * "abc";
 
             //var aaa = new A();
