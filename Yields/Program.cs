@@ -9,6 +9,7 @@ using Microsoft.Scripting.Hosting;
 using System.Numerics;
 using System.Net;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Yields
 {
@@ -70,8 +71,166 @@ namespace Yields
                 Console.Write(" ");
             Console.SetCursorPosition(0, currentLineCursor);
         }
+        static void Print(Array array)
+        {
+            if (array == null)
+            {
+                Console.WriteLine("null");
+                return;
+            }
+            for (int i = 0; i < array.Length; i++)
+                Console.Write("{0} ", array.GetValue(i));
+            Console.WriteLine();
+        }
+
+        static Array Combine(params Array[] arr)
+        {
+            Type prevType = null;
+            int length = 0;
+            if (arr.Length == 0)
+                return null;
+
+            foreach (var item in arr)
+            {
+                var currentType = item.GetType().GetElementType();
+                if (prevType == null)
+                {
+                    prevType = currentType;
+                    length += item.Length;
+                    continue;
+                }
+
+                if(currentType != prevType)
+                {
+                    return null;
+                }
+
+                length += item.Length;
+                prevType = currentType;
+            }
+
+
+            Array array = Array.CreateInstance(prevType, length);
+            int i = 0;
+            foreach (var item in arr)
+            {
+                foreach (var item2 in item)
+                {
+                    array.SetValue(item2, i);
+                    i++;
+                }
+            }
+
+            return array;
+        }
+
+        private static T FirstOrDefault<T>(IEnumerable<T> source, Func<T, bool> filter)
+        {
+            T sourceItem = default(T);
+            if(source == null || source.Count() == 0)
+                return default(T);
+
+            foreach (var item in source)
+            {
+                if (filter(item))
+                {
+                    return item;
+                }
+            }
+
+             return sourceItem;
+        }
+
+        private static IEnumerable<T> Take<T>(IEnumerable<T> source, int count)
+        {
+            int i = 0;
+            if (count > 0)
+            {
+                foreach (var item in source)
+                {
+                    yield return item;
+                    if (i >= count-1)
+                        break;
+                    i++;
+                }
+            }
+            else
+            {
+                yield break;
+            }
+        }
+        public static string Decode(string textWithWrongEncoding, Encoding rightEncoding = null, Encoding wrongEncoding = null)
+        {
+            rightEncoding = rightEncoding ?? Encoding.UTF8;
+            wrongEncoding = wrongEncoding ?? Encoding.GetEncoding(437);
+            return rightEncoding.GetString(wrongEncoding.GetBytes(textWithWrongEncoding));
+        }
+
+        public class A
+        {
+            private int number = 0;
+            public int Number { get => number; set { Console.WriteLine("Hello, world!"); Number = value; } }
+            public static A operator +(A counter1, A counter2)
+            {
+                return new A { Number = counter1.Number + counter2.Number };
+            }
+            public static A operator *(A counter1, string counter2)
+            {
+                return new A { Number = counter1.Number + int.Parse(counter2) };
+            }
+            
+            public static implicit operator int(A counter)
+            {
+                return counter.Number;
+            }
+        }
+
         public static async Task Main()
         {
+            int abba = new A() + new A() + new A() * "abc";
+
+            var aaa = new A();
+            aaa.Number = 1;
+
+
+            string str = Console.ReadLine();
+            Console.WriteLine(Decode(str));
+            return;
+
+            //if (3 == FirstOrDefault(new[] { 1, 2, 3 }, x => x > 2))
+            //{
+            //    foreach (var item in Take(new[] { 5 }, 0))
+            //    {
+            //        Console.WriteLine("YES\n" + item);
+            //    }
+            //}
+            //else
+            //    Console.WriteLine("NO\n" + FirstOrDefault(new int[0], x => true));
+            ////Assert.AreEqual(0, FirstOrDefault(new int[0], x => true)); // default(int) == 0
+            ////Assert.AreEqual(null, FirstOrDefault(new string[0], x => true)); // default(string) == null
+            ////Assert.AreEqual(3, FirstOrDefault(new[] { 1, 2, 3 }, x => x > 2));
+            ////Assert.AreEqual(3, FirstOrDefault(new[] { 3, 2, 1 }, x => x > 2));
+            ////Assert.AreEqual(3, FirstOrDefault(new[] { 2, 3, 1 }, x => x > 2));
+            ////CheckYieldReturn();
+
+            //Console.WriteLine("OK");
+            //return;
+
+
+
+            //var ints = new[] { 1, 2 };
+            //var strings = new[] { "A", "B" };
+
+            //Print(Combine(ints, ints));
+            //Print(Combine(ints, ints, ints));
+            //Print(Combine(ints));
+            //Print(Combine());
+            //Print(Combine(strings, strings));
+            //Print(Combine(ints, strings));
+
+            //return;
+
+
             //await Random(2);
             //await Random(50);
             //await Th();
@@ -1032,3 +1191,4 @@ namespace Yields
         }
     }
 }
+//2640
