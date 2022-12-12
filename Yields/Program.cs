@@ -66,7 +66,7 @@ namespace Yields
             object locker = new object();
             lock (locker)
             {
-                return Task.Run(() => Thread.Sleep(1000));
+                return Task.Run(() => Thread.Sleep(5000));
             };
         }
         public static void ClearCurrentConsoleLine()
@@ -78,13 +78,39 @@ namespace Yields
             Console.SetCursorPosition(0, currentLineCursor);
         }
 
+        private static async Task GetValie()
+        {
+            await Task.Run(() => Console.WriteLine("Start1"));
+            await Th();
+            await Task.Run(() => Console.WriteLine("Start2"));
+            await Task.Run(() => Console.WriteLine("Start3"));
+        }
+
         public static async Task Main()
         {
-            var digit = int.Parse(Console.ReadLine());
-            var strRight = "Принадлежит";
-            var strFalse = "Не принадлежит";
-            Console.WriteLine((digit <= -3 || digit >= 7) ? strRight : strFalse);
-            return;
+            //var digit = int.Parse(Console.ReadLine() ?? "0");
+            //var strRight = "Принадлежит";
+            //var strFalse = "Не принадлежит";
+            //Console.WriteLine((digit <= -3 || digit >= 7) ? strRight : strFalse);
+            //return;
+            ConsoleColor[] colors = new ConsoleColor[10] { ConsoleColor.Red, ConsoleColor.DarkCyan, ConsoleColor.DarkGreen, ConsoleColor.DarkRed, ConsoleColor.Blue, ConsoleColor.Yellow, ConsoleColor.Magenta, ConsoleColor.Green, ConsoleColor.Cyan, ConsoleColor.White, };
+
+            Papka.Class1.messAction = Console.WriteLine;
+            for (int i = 0; i < 10; i++)
+            {
+                Console.BackgroundColor = colors[i];
+                var res = await Task.Run(async () => await Papka.Class1.OtchetFormirovanie(i));
+                if (res == Papka.Result.Bad)
+                {
+                    ClearCurrentConsoleLine();
+                }
+            }
+            Console.ResetColor();
+
+            var drag = new Thread(async () => await GetValie());
+            drag.Priority = ThreadPriority.Highest;
+            drag.IsBackground = true;
+            drag.Start();
 
             //int abba = new A() + new A() + new A() * "abc";
 
@@ -525,8 +551,9 @@ namespace Yields
             }
 
 
-            Array array = Array.CreateInstance(prevType, length);
+            Array array = Array.CreateInstance(prevType ?? 5.GetType(), length);
             int i = 0;
+            int j = -100;
             foreach (var item in arr)
             {
                 foreach (var item2 in item)
