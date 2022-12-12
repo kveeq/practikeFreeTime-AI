@@ -42,4 +42,24 @@ namespace Yields.Papka
         Bad,
         Warning
     }
+
+    public class UpToDate
+    {
+        private string id;
+        private DateTime date;
+        public DateTime Date { get => date; }
+        public string Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                date = DateTime.Now;
+                Class1.messAction?.Invoke($"Дата: {Date}\n{value}");
+                id = value;
+            }
+        }
+    }
 }

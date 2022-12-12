@@ -10,6 +10,7 @@ using System.Numerics;
 using System.Net;
 using Newtonsoft.Json;
 using System.Text;
+using Yields.Papka;
 
 namespace Yields
 {
@@ -88,14 +89,28 @@ namespace Yields
 
         public static async Task Main()
         {
+            Papka.Class1.messAction = Console.WriteLine;
+            UpToDate upToDate = new UpToDate();
+            upToDate.Id = "92-0940-25903-4-32432";
+
             //var digit = int.Parse(Console.ReadLine() ?? "0");
             //var strRight = "Принадлежит";
             //var strFalse = "Не принадлежит";
             //Console.WriteLine((digit <= -3 || digit >= 7) ? strRight : strFalse);
             //return;
-            ConsoleColor[] colors = new ConsoleColor[10] { ConsoleColor.Red, ConsoleColor.DarkCyan, ConsoleColor.DarkGreen, ConsoleColor.DarkRed, ConsoleColor.Blue, ConsoleColor.Yellow, ConsoleColor.Magenta, ConsoleColor.Green, ConsoleColor.Cyan, ConsoleColor.White, };
+            ConsoleColor[] colors = new ConsoleColor[10] { 
+                ConsoleColor.Red, 
+                ConsoleColor.DarkCyan, 
+                ConsoleColor.DarkGreen,
+                ConsoleColor.DarkRed,
+                ConsoleColor.Blue, 
+                ConsoleColor.Yellow, 
+                ConsoleColor.Magenta, 
+                ConsoleColor.Green, 
+                ConsoleColor.Cyan,
+                ConsoleColor.White, 
+            };
 
-            Papka.Class1.messAction = Console.WriteLine;
             for (int i = 0; i < 10; i++)
             {
                 Console.BackgroundColor = colors[i];
@@ -103,6 +118,14 @@ namespace Yields
                 if (res == Papka.Result.Bad)
                 {
                     ClearCurrentConsoleLine();
+                }
+                else if (res == Papka.Result.Succes)
+                {
+                    Papka.Class1.messAction?.Invoke("Succces");
+                }
+                else if (res == Papka.Result.Warning)
+                {
+                    Papka.Class1.messAction?.Invoke($"Warning {Result.Warning.ToString()}");
                 }
             }
             Console.ResetColor();
@@ -193,19 +216,19 @@ namespace Yields
                 ClearCurrentConsoleLine();
                 if (key == ConsoleKey.Escape)
                     break;
-                else if(key == ConsoleKey.G)
+                else if (key == ConsoleKey.G)
                 {
                     human.ThrowWeapon();
                 }
-                else if(key == ConsoleKey.E)
+                else if (key == ConsoleKey.E)
                 {
                     human.PullWeapon<Kinjal>(weapon);
                 }
-                else if(key == ConsoleKey.R)
+                else if (key == ConsoleKey.R)
                 {
                     human.Hit(human1);
                 }
-                else if(key == ConsoleKey.Q)
+                else if (key == ConsoleKey.Q)
                 {
                     human1.Eat(new Orange(20)); // специально кушает только второй чел, так как только у него уменьшается хп 
                 }
@@ -221,12 +244,12 @@ namespace Yields
             Console.WriteLine($"rЗдоровье Human1 = {human.Hp}");
             Console.WriteLine($"Здоровье Human2 = {human1.Hp}");
 
-            #if RELEASE
+#if RELEASE
                 Console.WriteLine("RELEASE"); 
-            #elif DEBUG
-                Console.WriteLine("DEBUG");
-            #endif
- 
+#elif DEBUG
+            Console.WriteLine("DEBUG");
+#endif
+
             WebProxy myProxy = new WebProxy("proxy.akbarsmed.ru", 8080);
             myProxy.BypassProxyOnLocal = false;
             HttpClient.DefaultProxy = myProxy;
